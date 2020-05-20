@@ -1,12 +1,18 @@
-﻿
+﻿@model PaymentAutomationLC.ViewModels.NewPaymentViewModel
 @{
     ViewData["Title"] = "New";
 }
 
 <h1>New Payment</h1>
 
-<form asp-controller="Payment" asp-action="New" method="post">
-    <label for="csv">Select .csv file to upload: </label>
-    <input id="csv" type="file" name="csv"/>
-    <input type="submit" value="Upload"/>
+<form asp-controller="Payment" asp-action="New" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="MonthYear"></label>
+        <input asp-for="MonthYear" />
+    </div>
+    <div class="form-group">
+        <label asp-for="File">Select .csv file to upload: </label>
+        <input asp-for="File"/>
+    </div>
+        <input type="submit" value="Upload"/>
 </form>
