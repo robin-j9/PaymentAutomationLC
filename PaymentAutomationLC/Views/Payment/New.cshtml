@@ -5,3 +5,8 @@
 
 <h1>New Payment</h1>
 
+<form asp-controller="Payment" asp-action="New" method="post">
+    <label for="csv">Select .csv file to upload: </label>
+    <input id="csv" type="file" name="csv"/>
+    <input type="submit" value="Upload"/>
+</form>
