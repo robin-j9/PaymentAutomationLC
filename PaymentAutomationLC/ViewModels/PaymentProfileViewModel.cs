@@ -9,7 +9,6 @@ namespace PaymentAutomationLC.ViewModels
 {
     public class PaymentProfileViewModel
     {
-        public List<SelectListItem> PaymentProfiles { get; set; }
         public int PaymentProfileID { get; set; }
         public string Name { get; set; }
         public double PayPerArticle { get; set; }
@@ -17,19 +16,6 @@ namespace PaymentAutomationLC.ViewModels
         public int MinimumPVForBonus { get; set; }
         
         public PaymentProfileViewModel() { }
-        public PaymentProfileViewModel(IEnumerable<PaymentProfile> paymentProfiles)
-        {
-            PaymentProfiles = new List<SelectListItem>();
-
-            foreach (PaymentProfile profile in paymentProfiles)
-            {
-                PaymentProfiles.Add(new SelectListItem
-                {
-                    Value = profile.ID.ToString(),
-                    Text = profile.Name
-                });
-            }
-        }
     }
 
 }
