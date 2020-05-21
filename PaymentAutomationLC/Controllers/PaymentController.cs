@@ -74,5 +74,11 @@ namespace PaymentAutomationLC.Controllers
             }
             return View();
         }
+
+        public IActionResult Settings()
+        {
+            PaymentSettingsViewModel paymentSettingsViewModel = new PaymentSettingsViewModel();
+            return View(paymentSettingsViewModel);
+        }
     }
 }
