@@ -23,7 +23,7 @@
                 <td>@profile.ArticleBonus</td>
                 <td>@profile.MinimumPVForBonus</td>
                 <td>
-                    <a asp-controller="Payment" asp-action="EditProfile">Edit</a>
+                    <a asp-controller="Payment" asp-action="EditProfile" asp-route-id="@profile.ID">Edit</a>
                 </td>
             </tr>
         }
