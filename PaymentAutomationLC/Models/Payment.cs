@@ -14,6 +14,7 @@ namespace PaymentAutomationLC.Models
         public int ID { get; set; }
         public string MonthYear { get; set; }
         public IEnumerable<Article> Articles { get; set; }
+        public PaymentSettings PaymentSettings { get; set; }
 
         public static IList<Article> ReadFile(IFormFile file)
         {
