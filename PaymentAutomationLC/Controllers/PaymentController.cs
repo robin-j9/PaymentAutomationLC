@@ -80,5 +80,33 @@ namespace PaymentAutomationLC.Controllers
             List<PaymentProfile> paymentProfiles = context.PaymentProfiles.ToList();
             return View(paymentProfiles);
         }
+
+        public IActionResult AddProfile()
+        {
+            PaymentProfileViewModel paymentProfileViewModel = new PaymentProfileViewModel();
+            return View(paymentProfileViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddProfile(PaymentProfileViewModel paymentProfileViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                PaymentProfile newPaymentProfile = new PaymentProfile{
+                    Name = paymentProfileViewModel.Name,
+                    PayPerArticle = paymentProfileViewModel.PayPerArticle,
+                    ArticleBonus = paymentProfileViewModel.ArticleBonus,
+                    MinimumPVForBonus = paymentProfileViewModel.MinimumPVForBonus
+                };
+                context.PaymentProfiles.Add(newPaymentProfile);
+                context.SaveChanges();
+
+                return Redirect("/Payment/Profiles");
+            }
+            else
+            {
+                return View(paymentProfileViewModel);
+            }
+        }
     }
 }
