@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PaymentAutomationLC.Models
 {
-    public class PaymentSettings
+    public class PaymentProfile
     {
         public int ID { get; set; }
         public string Name { get; set; }

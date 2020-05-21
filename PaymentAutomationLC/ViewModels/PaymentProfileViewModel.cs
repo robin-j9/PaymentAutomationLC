@@ -10,7 +10,7 @@ namespace PaymentAutomationLC.ViewModels
     public class PaymentProfileViewModel
     {
         public List<SelectListItem> PaymentProfiles { get; set; }
-        public int PaymentSettingID { get; set; }
+        public int PaymentProfileID { get; set; }
         public string Name { get; set; }
         public double PayPerArticle { get; set; }
         public double ArticleBonus { get; set; }
