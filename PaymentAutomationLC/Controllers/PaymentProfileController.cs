@@ -57,12 +57,7 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.ID == paymentProfileViewModel.PaymentProfileID);
-                profileToEdit.Name = paymentProfileViewModel.Name;
-                profileToEdit.PayPerArticle = paymentProfileViewModel.PayPerArticle;
-                profileToEdit.ArticleBonus = paymentProfileViewModel.ArticleBonus;
-                profileToEdit.MinimumPVForBonus = paymentProfileViewModel.MinimumPVForBonus;
-
+                PaymentProfile.RetrieveAndEditPaymentProfile(paymentProfileViewModel, context);
                 context.SaveChanges();
                 return Redirect("/PaymentProfile/Index");
             }

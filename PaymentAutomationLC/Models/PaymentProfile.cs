@@ -1,4 +1,5 @@
-﻿using PaymentAutomationLC.ViewModels;
+﻿using PaymentAutomationLC.Data;
+using PaymentAutomationLC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,15 @@ namespace PaymentAutomationLC.Models
             PayPerArticle = paymentProfileViewModel.PayPerArticle;
             ArticleBonus = paymentProfileViewModel.ArticleBonus;
             MinimumPVForBonus = paymentProfileViewModel.MinimumPVForBonus;
+        }
+
+        public static void RetrieveAndEditPaymentProfile(PaymentProfileViewModel paymentProfileViewModel, ApplicationDbContext context)
+        {
+            PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.ID == paymentProfileViewModel.PaymentProfileID);
+            profileToEdit.Name = paymentProfileViewModel.Name;
+            profileToEdit.PayPerArticle = paymentProfileViewModel.PayPerArticle;
+            profileToEdit.ArticleBonus = paymentProfileViewModel.ArticleBonus;
+            profileToEdit.MinimumPVForBonus = paymentProfileViewModel.MinimumPVForBonus;
         }
     }
 }
