@@ -42,34 +42,12 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool exists = context.Payments.Any(p => p.MonthYear == newPaymentViewModel.MonthYear);
-                Payment payment;
-                if (exists)
-                {
-                    payment = context.Payments.Single(p => p.MonthYear == newPaymentViewModel.MonthYear);
-                }
-                else
-                {
-                    payment = new Payment()
-                    {
-                        MonthYear = newPaymentViewModel.MonthYear
-                    };
-                    context.Payments.Add(payment);
-                    context.SaveChanges();
-                }
+                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);    
+                context.Payments.Add(payment);
+                context.SaveChanges();
                 
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
-                foreach(Article article in articles)
-                {
-                    context.Articles.Add(new Article()
-                    {
-                        Writer = article.Writer,
-                        DateWritten = article.DateWritten,
-                        ArticleTitle = article.ArticleTitle,
-                        PageViews = article.PageViews,
-                        Payment = payment
-                    });
-                }
+                Article.AddArticlesToDatabase(articles, payment, context);
                 context.SaveChanges();
             }
             return View();
