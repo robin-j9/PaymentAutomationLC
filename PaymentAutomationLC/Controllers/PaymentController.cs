@@ -41,37 +41,83 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool exists = context.Payments.Any(p => p.MonthYear == newPaymentViewModel.MonthYear);
-                Payment payment;
-                if (exists)
-                {
-                    payment = context.Payments.Single(p => p.MonthYear == newPaymentViewModel.MonthYear);
-                }
-                else
-                {
-                    payment = new Payment()
-                    {
-                        MonthYear = newPaymentViewModel.MonthYear
-                    };
-                    context.Payments.Add(payment);
-                    context.SaveChanges();
-                }
+                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);    
+                context.Payments.Add(payment);
+                context.SaveChanges();
                 
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
-                foreach(Article article in articles)
-                {
-                    context.Articles.Add(new Article()
-                    {
-                        Writer = article.Writer,
-                        DateWritten = article.DateWritten,
-                        ArticleTitle = article.ArticleTitle,
-                        PageViews = article.PageViews,
-                        Payment = payment
-                    });
-                }
+                Article.AddArticlesToDatabase(articles, payment, context);
                 context.SaveChanges();
             }
             return View();
+        }
+
+        public IActionResult Profiles()
+        {
+            List<PaymentProfile> paymentProfiles = context.PaymentProfiles.ToList();
+            return View(paymentProfiles);
+        }
+
+        public IActionResult AddProfile()
+        {
+            PaymentProfileViewModel paymentProfileViewModel = new PaymentProfileViewModel();
+            return View(paymentProfileViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddProfile(PaymentProfileViewModel paymentProfileViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                PaymentProfile newPaymentProfile = new PaymentProfile{
+                    Name = paymentProfileViewModel.Name,
+                    PayPerArticle = paymentProfileViewModel.PayPerArticle,
+                    ArticleBonus = paymentProfileViewModel.ArticleBonus,
+                    MinimumPVForBonus = paymentProfileViewModel.MinimumPVForBonus
+                };
+                context.PaymentProfiles.Add(newPaymentProfile);
+                context.SaveChanges();
+
+                return Redirect("/Payment/Profiles");
+            }
+            else
+            {
+                return View(paymentProfileViewModel);
+            }
+        }
+
+        public IActionResult EditProfile(int id)
+        {
+            PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.ID == id);
+            PaymentProfileViewModel paymentProfileViewModel = new PaymentProfileViewModel
+            {
+                Name = profileToEdit.Name,
+                PayPerArticle = profileToEdit.PayPerArticle,
+                ArticleBonus = profileToEdit.ArticleBonus,
+                MinimumPVForBonus = profileToEdit.MinimumPVForBonus,
+                PaymentProfileID = id
+            };
+            return View(paymentProfileViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditProfile(PaymentProfileViewModel paymentProfileViewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.ID == paymentProfileViewModel.PaymentProfileID);
+                profileToEdit.Name = paymentProfileViewModel.Name;
+                profileToEdit.PayPerArticle = paymentProfileViewModel.PayPerArticle;
+                profileToEdit.ArticleBonus = paymentProfileViewModel.ArticleBonus;
+                profileToEdit.MinimumPVForBonus = paymentProfileViewModel.MinimumPVForBonus;
+
+                context.SaveChanges();
+                return Redirect("/Payment/Profiles");
+            } 
+            else
+            {
+                return View(paymentProfileViewModel);
+            }
         }
     }
 }

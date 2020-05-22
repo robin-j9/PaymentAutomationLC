@@ -1,0 +1,26 @@
+﻿@model PaymentAutomationLC.ViewModels.PaymentProfileViewModel
+@{
+    ViewData["Title"] = "AddProfile";
+}
+
+<h1>Add Payment Profile</h1>
+
+<form asp-controller="Payment" asp-action="AddProfile" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PayPerArticle"></label>
+        <input asp-for="PayPerArticle" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ArticleBonus"></label>
+        <input asp-for="ArticleBonus" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MinimumPVForBonus"></label>
+        <input asp-for="MinimumPVForBonus" />
+    </div>
+    <input type="submit" value="Add Profile"/>
+</form>

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FileHelpers;
+using Microsoft.AspNetCore.Http;
+using PaymentAutomationLC.Data;
+using PaymentAutomationLC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +16,7 @@ namespace PaymentAutomationLC.Models
         public int ID { get; set; }
         public string MonthYear { get; set; }
         public IEnumerable<Article> Articles { get; set; }
+        public PaymentProfile PaymentProfile { get; set; }
 
         public static IList<Article> ReadFile(IFormFile file)
         {
@@ -35,6 +39,24 @@ namespace PaymentAutomationLC.Models
                 }
             }
             return articles;
+        }
+
+        public static Payment RetrieveExistingPaymentOrReturnNew(ApplicationDbContext context, NewPaymentViewModel newPaymentViewModel)
+        {
+            bool exists = context.Payments.Any(p => p.MonthYear == newPaymentViewModel.MonthYear);
+            Payment payment;
+            if (exists)
+            {
+                payment = context.Payments.Single(p => p.MonthYear == newPaymentViewModel.MonthYear);
+            }
+            else
+            {
+                payment = new Payment()
+                {
+                    MonthYear = newPaymentViewModel.MonthYear
+                };
+            }
+            return payment;
         }
     }
 }
