@@ -53,6 +53,7 @@ namespace PaymentAutomationLC.Models
                 {
                     MonthYear = newPaymentViewModel.MonthYear
                 };
+                context.Payments.Add(payment);
             }
             return payment;
         }
