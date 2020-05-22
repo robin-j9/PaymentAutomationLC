@@ -47,17 +47,7 @@ namespace PaymentAutomationLC.Controllers
                 context.SaveChanges();
                 
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
-                foreach(Article article in articles)
-                {
-                    context.Articles.Add(new Article()
-                    {
-                        Writer = article.Writer,
-                        DateWritten = article.DateWritten,
-                        ArticleTitle = article.ArticleTitle,
-                        PageViews = article.PageViews,
-                        Payment = payment
-                    });
-                }
+                Article.AddArticlesToDatabase(articles, payment, context);
                 context.SaveChanges();
             }
             return View();
