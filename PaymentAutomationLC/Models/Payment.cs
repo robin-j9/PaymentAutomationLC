@@ -1,5 +1,4 @@
-﻿using FileHelpers;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using PaymentAutomationLC.Data;
 using PaymentAutomationLC.ViewModels;
 using System;
@@ -16,7 +15,6 @@ namespace PaymentAutomationLC.Models
         public int ID { get; set; }
         public string MonthYear { get; set; }
         public IEnumerable<Article> Articles { get; set; }
-        public PaymentProfile PaymentProfile { get; set; }
 
         public static IList<Article> ReadFile(IFormFile file)
         {
