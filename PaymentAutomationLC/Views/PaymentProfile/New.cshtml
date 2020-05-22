@@ -3,9 +3,9 @@
     ViewData["Title"] = "AddProfile";
 }
 
-<h1>Add Payment Profile</h1>
+<h1>New Payment Profile</h1>
 
-<form asp-controller="Payment" asp-action="AddProfile" method="post">
+<form asp-controller="PaymentProfile" asp-action="New" method="post">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" />
@@ -22,5 +22,5 @@
         <label asp-for="MinimumPVForBonus"></label>
         <input asp-for="MinimumPVForBonus" />
     </div>
-    <input type="submit" value="Add Profile"/>
+    <input type="submit" value="Add Profile" />
 </form>

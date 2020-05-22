@@ -5,7 +5,7 @@
 
 <h1>Edit Payment Profile - @Model.Name</h1>
 
-<form asp-controller="Payment" asp-action="EditProfile" method="post">
+<form asp-controller="PaymentProfile" asp-action="Edit" method="post">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" value="@Model.Name" />
@@ -16,13 +16,13 @@
     </div>
     <div class="form-group">
         <label asp-for="ArticleBonus"></label>
-        <input asp-for="ArticleBonus" value="@Model.ArticleBonus"/>
+        <input asp-for="ArticleBonus" value="@Model.ArticleBonus" />
     </div>
     <div class="form-group">
         <label asp-for="MinimumPVForBonus"></label>
-        <input asp-for="MinimumPVForBonus" value="@Model.MinimumPVForBonus"/>
+        <input asp-for="MinimumPVForBonus" value="@Model.MinimumPVForBonus" />
     </div>
-    <input type="hidden" asp-for="PaymentProfileID" value="@Model.PaymentProfileID"/>
+    <input type="hidden" asp-for="PaymentProfileID" value="@Model.PaymentProfileID" />
     <input type="submit" value="Edit Profile" />
 </form>
 

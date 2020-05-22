@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using PaymentAutomationLC.Data;
 using PaymentAutomationLC.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,16 @@ namespace PaymentAutomationLC.ViewModels
         public int MinimumPVForBonus { get; set; }
         
         public PaymentProfileViewModel() { }
+
+        public PaymentProfileViewModel(int id, ApplicationDbContext context)
+        {
+            PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.ID == id);
+            Name = profileToEdit.Name;
+            PayPerArticle = profileToEdit.PayPerArticle;
+            ArticleBonus = profileToEdit.ArticleBonus;
+            MinimumPVForBonus = profileToEdit.MinimumPVForBonus;
+            PaymentProfileID = id;
+        }
     }
 
 }
