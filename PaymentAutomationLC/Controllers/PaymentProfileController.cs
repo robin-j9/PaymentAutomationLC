@@ -35,16 +35,9 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                PaymentProfile newPaymentProfile = new PaymentProfile
-                {
-                    Name = paymentProfileViewModel.Name,
-                    PayPerArticle = paymentProfileViewModel.PayPerArticle,
-                    ArticleBonus = paymentProfileViewModel.ArticleBonus,
-                    MinimumPVForBonus = paymentProfileViewModel.MinimumPVForBonus
-                };
+                PaymentProfile newPaymentProfile = new PaymentProfile(paymentProfileViewModel);
                 context.PaymentProfiles.Add(newPaymentProfile);
                 context.SaveChanges();
-
                 return Redirect("/PaymentProfile/Index");
             }
             else
