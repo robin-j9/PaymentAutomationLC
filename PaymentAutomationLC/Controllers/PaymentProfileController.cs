@@ -48,15 +48,7 @@ namespace PaymentAutomationLC.Controllers
 
         public IActionResult Edit(int id)
         {
-            PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.ID == id);
-            PaymentProfileViewModel paymentProfileViewModel = new PaymentProfileViewModel
-            {
-                Name = profileToEdit.Name,
-                PayPerArticle = profileToEdit.PayPerArticle,
-                ArticleBonus = profileToEdit.ArticleBonus,
-                MinimumPVForBonus = profileToEdit.MinimumPVForBonus,
-                PaymentProfileID = id
-            };
+            PaymentProfileViewModel paymentProfileViewModel = new PaymentProfileViewModel(id, context);
             return View(paymentProfileViewModel);
         }
 
