@@ -27,7 +27,8 @@ namespace PaymentAutomationLC.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            IList<Payment> payments = context.Payments.ToList();
+            return View(payments);
         }
 
         public IActionResult New()

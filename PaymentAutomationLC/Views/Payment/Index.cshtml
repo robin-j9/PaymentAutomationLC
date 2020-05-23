@@ -1,7 +1,26 @@
-﻿
+﻿@model IList<PaymentAutomationLC.Models.Payment>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>View Payments</h1>
 
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Articles</th>
+        <th>Summary</th>
+    </tr>
+    @foreach(var payment in Model)
+    {
+        <tr>
+            <td>@payment.MonthYear</td>
+            <td>
+                <a>View</a>
+            </td>
+            <td>
+                <a>View</a>
+            </td>
+        </tr>
+    }
+</table>
