@@ -49,5 +49,26 @@ namespace PaymentAutomationLC.Controllers
             NewUserViewModel newUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), roleManager.Roles);
             return View(newUserViewModel);
         }
+
+        [HttpPost]
+        public Task<IActionResult> NewAsync(NewUserViewModel newUserViewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                ApplicationUser newUser = new ApplicationUser
+                {
+                    FirstName = newUserViewModel.FirstName,
+                    LastName = newUserViewModel.LastName,
+                    Email = newUserViewModel.Email,
+                    DateAdded = newUserViewModel.DateAdded,
+                    PaymentProfile = context.PaymentProfiles.Single(p => p.ID == newUserViewModel.PaymentProfileID)
+                };
+                context.Users.Add(newUser);
+                context.SaveChanges();
+                Task<IdentityRole> roleToAdd = roleManager.FindByIdAsync(newUserViewModel.IdentityRoleID.ToString());
+                userManager.AddToRoleAsync(newUser, roleToAdd.ToString());
+            }
+            return NewAsync(newUserViewModel);
+        }
     }
 }
