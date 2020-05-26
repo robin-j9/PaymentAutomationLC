@@ -46,12 +46,12 @@ namespace PaymentAutomationLC.Controllers
 
         public IActionResult New()
         {
-            NewUserViewModel newUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), roleManager.Roles);
+            NewUserViewModel newUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList());
             return View(newUserViewModel);
         }
 
         [HttpPost]
-        public Task<IActionResult> NewAsync(NewUserViewModel newUserViewModel)
+        public async Task<IActionResult> NewAsync(NewUserViewModel newUserViewModel)
         {
             if(ModelState.IsValid)
             {
@@ -63,12 +63,16 @@ namespace PaymentAutomationLC.Controllers
                     DateAdded = newUserViewModel.DateAdded,
                     PaymentProfile = context.PaymentProfiles.Single(p => p.ID == newUserViewModel.PaymentProfileID)
                 };
+ 
+                IdentityRole roleToAdd = context.Roles.ToList().Single(r => r.Id.ToString().Equals(newUserViewModel.IdentityRoleID.ToString()));
+                //Task<string> roleName = await roleManager.GetRoleNameAsync(roleToAdd);
+                await userManager.AddToRoleAsync(newUser, roleToAdd.Name);
+
                 context.Users.Add(newUser);
                 context.SaveChanges();
-                Task<IdentityRole> roleToAdd = roleManager.FindByIdAsync(newUserViewModel.IdentityRoleID.ToString());
-                userManager.AddToRoleAsync(newUser, roleToAdd.ToString());
+                return Redirect("/User/Index");
             }
-            return NewAsync(newUserViewModel);
+            return View(newUserViewModel);
         }
     }
 }
