@@ -10,7 +10,6 @@ using PaymentAutomationLC.Models;
 
 namespace PaymentAutomationLC.Controllers
 {
-    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -20,11 +19,13 @@ namespace PaymentAutomationLC.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
