@@ -1,11 +1,12 @@
-﻿@{
+﻿@model ApplicationUser
+@{
     ViewData["Title"] = "Home Page";
 }
 
     <div class="text-center">
-        <h1 class="display-4">Welcome @User.Identity.Name</h1>
-        <a class="btn btn-primary" asp-controller="Payment" asp-action="Index">View Payments</a><br />
-        <a class="btn btn-primary" asp-controller="Payment" asp-action="New">New Payment</a><br />
-        <a class="btn btn-primary" asp-controller="PaymentProfile" asp-action="Index">Payment Profiles</a><br />
+        <h1 class="display-4">Welcome @Model.FirstName!</h1>
+        <a class="btn btn-primary" asp-controller="Payment" asp-action="Index">View Payments</a>
+        <a class="btn btn-primary" asp-controller="Payment" asp-action="New">New Payment</a>
+        <a class="btn btn-primary" asp-controller="PaymentProfile" asp-action="Index">Payment Profiles</a>
         <a class="btn btn-primary" asp-controller="User" asp-action="Index">View Users</a>
     </div>
