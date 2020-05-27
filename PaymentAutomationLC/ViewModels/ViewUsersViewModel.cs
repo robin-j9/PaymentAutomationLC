@@ -9,7 +9,7 @@ namespace PaymentAutomationLC.ViewModels
 {
     public class ViewUsersViewModel
     {
-        public IEnumerable<ApplicationUser> Users { get; set; }
+        public IList<ApplicationUser> Users { get; set; }
         public List<IList<string>> Roles { get; set; }
     }
 }

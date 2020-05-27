@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PaymentAutomationLC.Data;
 using PaymentAutomationLC.Models;
 using PaymentAutomationLC.ViewModels;
@@ -13,15 +14,12 @@ namespace PaymentAutomationLC.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext context;
 
         public UserController(UserManager<ApplicationUser> userManager, 
-                              RoleManager<IdentityRole> roleManager,
                               ApplicationDbContext dbContext)
         {
             this.userManager = userManager;
-            this.roleManager = roleManager;
             context = dbContext;
         }
         public async Task<IActionResult> IndexAsync()
@@ -29,6 +27,7 @@ namespace PaymentAutomationLC.Controllers
             IList<string> roles;
             List<IList<string>> userRoles = new List<IList<string>>();
 
+            // Get list of roles for each user
             foreach(var user in userManager.Users)
             {
                 roles = await userManager.GetRolesAsync(user);
@@ -37,7 +36,7 @@ namespace PaymentAutomationLC.Controllers
 
             ViewUsersViewModel viewUsersViewModel = new ViewUsersViewModel
             {
-                Users = userManager.Users,
+                Users = context.Users.Include(u => u.PaymentProfile).ToList(),
                 Roles = userRoles
             };
 
@@ -55,17 +54,9 @@ namespace PaymentAutomationLC.Controllers
         {
             if(ModelState.IsValid)
             {
-                ApplicationUser newUser = new ApplicationUser
-                {
-                    FirstName = newUserViewModel.FirstName,
-                    LastName = newUserViewModel.LastName,
-                    Email = newUserViewModel.Email,
-                    DateAdded = newUserViewModel.DateAdded,
-                    PaymentProfile = context.PaymentProfiles.Single(p => p.ID == newUserViewModel.PaymentProfileID)
-                };
+                ApplicationUser newUser = new ApplicationUser(newUserViewModel, context);
  
                 IdentityRole roleToAdd = context.Roles.ToList().Single(r => r.Id.ToString().Equals(newUserViewModel.IdentityRoleID.ToString()));
-                //Task<string> roleName = await roleManager.GetRoleNameAsync(roleToAdd);
                 await userManager.AddToRoleAsync(newUser, roleToAdd.Name);
 
                 context.Users.Add(newUser);

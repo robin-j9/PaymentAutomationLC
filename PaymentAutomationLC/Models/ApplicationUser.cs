@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PaymentAutomationLC.Data;
+using PaymentAutomationLC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,16 @@ namespace PaymentAutomationLC.Models
         public DateTime DateAdded { get; set; }
         public int PaymentProfileID { get; set; }
         public PaymentProfile PaymentProfile { get; set; }
+
+        public ApplicationUser() { }
+
+        public ApplicationUser(NewUserViewModel newUserViewModel, ApplicationDbContext context)
+        {
+            FirstName = newUserViewModel.FirstName;
+            LastName = newUserViewModel.LastName;
+            Email = newUserViewModel.Email;
+            DateAdded = newUserViewModel.DateAdded;
+            PaymentProfile = context.PaymentProfiles.Single(p => p.ID.Equals(newUserViewModel.PaymentProfileID));
+        }
     }
 }
