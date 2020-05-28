@@ -17,10 +17,11 @@
     {
         <tr>
             <td>@Model.Roles[i][0]</td>
-            <td>@Model.Users.ToList()[i].FirstName @Model.Users.ToList()[i].LastName</td>
-            <td>@Model.Users.ToList()[i].Email</td>
-            <td>@Model.Users.ToList()[i].DateAdded</td>
-            <td>@Model.Users.ToList()[i].PaymentProfile</td>
+            <td>@Model.Users[i].FirstName @Model.Users[i].LastName</td>
+            <td>@Model.Users[i].Email</td>
+            <td>@Model.Users[i].DateAdded</td>
+            <td>@Model.Users[i].PaymentProfile.Name</td>
         </tr>
     }
 </table>
+<a asp-controller="User" asp-action="New">New User</a>

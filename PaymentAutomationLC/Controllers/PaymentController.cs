@@ -14,7 +14,6 @@ using PaymentAutomationLC.ViewModels;
 
 namespace PaymentAutomationLC.Controllers
 {
-    [Authorize]
     public class PaymentController : Controller
     {
         private ApplicationDbContext context;
