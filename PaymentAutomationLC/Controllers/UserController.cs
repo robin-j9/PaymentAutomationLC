@@ -65,5 +65,22 @@ namespace PaymentAutomationLC.Controllers
             }
             return View(newUserViewModel);
         }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            // TODO: CLEAN UP
+            ApplicationUser userToEdit = context.Users.Single(u => u.Id.Equals(id));
+            IList<string> userToEditRoles = await userManager.GetRolesAsync(userToEdit);
+            IdentityRole role = context.Roles.Single(r => r.Name.Equals(userToEditRoles[0]));
+            NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList())
+            {
+                IdentityRoleID = Int32.Parse(role.Id),
+                FirstName = userToEdit.FirstName,
+                LastName = userToEdit.LastName,
+                Email = userToEdit.Email,
+                PaymentProfileID = userToEdit.PaymentProfileID
+            };
+            return View(editUserViewModel);
+        }
     }
 }
