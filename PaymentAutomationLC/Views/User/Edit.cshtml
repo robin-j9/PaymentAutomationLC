@@ -26,6 +26,6 @@
         <label asp-for="IdentityRoleID"></label>
         <select asp-for="IdentityRoleID" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleID"></select>
     </div>
-
+    <input type="hidden" asp-for="UserID" value="@Model.UserID"/>
     <input type="submit" value="Edit User" />
 </form>

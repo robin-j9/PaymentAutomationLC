@@ -74,12 +74,32 @@ namespace PaymentAutomationLC.Controllers
             IdentityRole role = context.Roles.Single(r => r.Name.Equals(userToEditRoles[0]));
             NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList())
             {
+                UserID = id,
                 IdentityRoleID = Int32.Parse(role.Id),
                 FirstName = userToEdit.FirstName,
                 LastName = userToEdit.LastName,
                 Email = userToEdit.Email,
                 PaymentProfileID = userToEdit.PaymentProfileID
             };
+            return View(editUserViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(NewUserViewModel editUserViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser userToEdit = context.Users.Single(u => u.Id.Equals(editUserViewModel.UserID));
+                // TODO: ADD AND REMOVE ROLE
+                // TODO: CLEAN UP
+                userToEdit.FirstName = editUserViewModel.FirstName;
+                userToEdit.LastName = editUserViewModel.LastName;
+                userToEdit.Email = editUserViewModel.Email;
+                userToEdit.PaymentProfileID = editUserViewModel.PaymentProfileID;
+
+                context.SaveChanges();
+                return Redirect("/User/Index");
+            }
             return View(editUserViewModel);
         }
     }
