@@ -14,12 +14,14 @@ namespace PaymentAutomationLC.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext context;
 
-        public UserController(UserManager<ApplicationUser> userManager, 
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, 
                               ApplicationDbContext dbContext)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
             context = dbContext;
         }
         public async Task<IActionResult> IndexAsync()
@@ -64,6 +66,36 @@ namespace PaymentAutomationLC.Controllers
                 return Redirect("/User/Index");
             }
             return View(newUserViewModel);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            // TODO: CLEAN UP
+            ApplicationUser userToEdit = await userManager.FindByIdAsync(id);
+            IList<string> userToEditRoles = await userManager.GetRolesAsync(userToEdit);
+            IdentityRole userToEditRole = await roleManager.FindByNameAsync(userToEditRoles[0]);
+            NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList(), userToEdit, userToEditRole);
+            return View(editUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(NewUserViewModel editUserViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser userToEdit = await userManager.FindByIdAsync(editUserViewModel.UserID);
+                IdentityRole newRole = await roleManager.FindByIdAsync(editUserViewModel.IdentityRoleID);
+                if (newRole.Name != editUserViewModel.OldRoleName)
+                {
+                    await userManager.RemoveFromRoleAsync(userToEdit, editUserViewModel.OldRoleName);
+                    await userManager.AddToRoleAsync(userToEdit, newRole.Name);
+                }
+
+                ApplicationUser.EditUser(userToEdit, editUserViewModel);
+                await userManager.UpdateAsync(userToEdit);
+                return Redirect("/User/Index");
+            }
+            return View(editUserViewModel);
         }
     }
 }
