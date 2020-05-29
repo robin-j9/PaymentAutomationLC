@@ -17,8 +17,9 @@ namespace PaymentAutomationLC.ViewModels
         public DateTime DateAdded { get; set; }
         public int PaymentProfileID { get; set; }
         public List<SelectListItem> PaymentProfiles { get; set; } = new List<SelectListItem>();
-        public int IdentityRoleID { get; set; }
+        public string IdentityRoleID { get; set; }
         public List<SelectListItem> IdentityRoles { get; set; } = new List<SelectListItem>();
+        public string OldRoleName { get; set; }
 
         public NewUserViewModel() { }
         public NewUserViewModel(IEnumerable<PaymentProfile> paymentProfiles, IEnumerable<IdentityRole> roles)

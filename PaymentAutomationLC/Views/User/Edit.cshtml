@@ -5,7 +5,7 @@
 
 <h1>Edit User</h1>
 
-<form asp-controller="User" asp-action="New" method="post">
+<form asp-controller="User" asp-action="Edit" method="post">
     <div class="form-group">
         <label asp-for="FirstName"></label>
         <input asp-for="FirstName" value="@Model.FirstName" />
@@ -27,5 +27,6 @@
         <select asp-for="IdentityRoleID" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleID"></select>
     </div>
     <input type="hidden" asp-for="UserID" value="@Model.UserID"/>
+    <input type="hidden" asp-for="OldRoleName" value="@Model.OldRoleName" />
     <input type="submit" value="Edit User" />
 </form>
