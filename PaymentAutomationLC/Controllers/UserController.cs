@@ -33,6 +33,10 @@ namespace PaymentAutomationLC.Controllers
             foreach(var user in userManager.Users)
             {
                 roles = await userManager.GetRolesAsync(user);
+                if(roles.Count == 0)
+                {
+                    userRoles.Add(new List<string>() { "N/A" }); ;
+                }
                 userRoles.Add(roles);
             }
 
@@ -73,8 +77,18 @@ namespace PaymentAutomationLC.Controllers
             // TODO: CLEAN UP
             ApplicationUser userToEdit = await userManager.FindByIdAsync(id);
             IList<string> userToEditRoles = await userManager.GetRolesAsync(userToEdit);
-            IdentityRole userToEditRole = await roleManager.FindByNameAsync(userToEditRoles[0]);
+            IdentityRole userToEditRole;
+            bool noRole = userToEditRoles.Count == 0;
+            if(noRole)
+            {
+                userToEditRole = await roleManager.FindByNameAsync("Employee");
+            }
+            else
+            {
+                userToEditRole = await roleManager.FindByNameAsync(userToEditRoles[0]);
+            }
             NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList(), userToEdit, userToEditRole);
+            if (noRole) editUserViewModel.OldRoleName = "N/A";
             return View(editUserViewModel);
         }
 
@@ -85,10 +99,13 @@ namespace PaymentAutomationLC.Controllers
             {
                 ApplicationUser userToEdit = await userManager.FindByIdAsync(editUserViewModel.UserID);
                 IdentityRole newRole = await roleManager.FindByIdAsync(editUserViewModel.IdentityRoleID);
-                if (newRole.Name != editUserViewModel.OldRoleName)
+                if (editUserViewModel.OldRoleName == "N/A")
+                {
+                    await userManager.AddToRoleAsync(userToEdit, newRole.Name);
+                }
+                if (newRole.Name != editUserViewModel.OldRoleName && editUserViewModel.OldRoleName != "N/A")
                 {
                     await userManager.RemoveFromRoleAsync(userToEdit, editUserViewModel.OldRoleName);
-                    await userManager.AddToRoleAsync(userToEdit, newRole.Name);
                 }
 
                 ApplicationUser.EditUser(userToEdit, editUserViewModel);
