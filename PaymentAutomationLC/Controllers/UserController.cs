@@ -73,17 +73,8 @@ namespace PaymentAutomationLC.Controllers
             // TODO: CLEAN UP
             ApplicationUser userToEdit = await userManager.FindByIdAsync(id);
             IList<string> userToEditRoles = await userManager.GetRolesAsync(userToEdit);
-            IdentityRole role = context.Roles.Single(r => r.Name.Equals(userToEditRoles[0]));
-            NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList())
-            {
-                UserID = id,
-                IdentityRoleID = role.Id,
-                FirstName = userToEdit.FirstName,
-                LastName = userToEdit.LastName,
-                Email = userToEdit.Email,
-                PaymentProfileID = userToEdit.PaymentProfileID,
-                OldRoleName = role.Name
-            };
+            IdentityRole userToEditRole = await roleManager.FindByNameAsync(userToEditRoles[0]);
+            NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList(), userToEdit, userToEditRole);
             return View(editUserViewModel);
         }
 
@@ -99,12 +90,8 @@ namespace PaymentAutomationLC.Controllers
                     await userManager.RemoveFromRoleAsync(userToEdit, editUserViewModel.OldRoleName);
                     await userManager.AddToRoleAsync(userToEdit, newRole.Name);
                 }
-                // TODO: CLEAN UP
-                userToEdit.FirstName = editUserViewModel.FirstName;
-                userToEdit.LastName = editUserViewModel.LastName;
-                userToEdit.Email = editUserViewModel.Email;
-                userToEdit.PaymentProfileID = editUserViewModel.PaymentProfileID;
 
+                ApplicationUser.EditUser(userToEdit, editUserViewModel);
                 await userManager.UpdateAsync(userToEdit);
                 return Redirect("/User/Index");
             }

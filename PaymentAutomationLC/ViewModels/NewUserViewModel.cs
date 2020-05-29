@@ -4,6 +4,7 @@ using PaymentAutomationLC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace PaymentAutomationLC.ViewModels
@@ -22,7 +23,7 @@ namespace PaymentAutomationLC.ViewModels
         public string OldRoleName { get; set; }
 
         public NewUserViewModel() { }
-        public NewUserViewModel(IEnumerable<PaymentProfile> paymentProfiles, IEnumerable<IdentityRole> roles)
+        public NewUserViewModel(IEnumerable<PaymentProfile> paymentProfiles, IEnumerable<IdentityRole> roles, [Optional]ApplicationUser userToEdit, [Optional]IdentityRole userToEditRole)
         {
             foreach(var profile in paymentProfiles)
             {
@@ -40,6 +41,17 @@ namespace PaymentAutomationLC.ViewModels
                     Value = role.Id,
                     Text = role.Name
                 });
+            }
+
+            if(userToEdit != null && userToEditRole != null)
+            {
+                UserID = userToEdit.Id;
+                IdentityRoleID = userToEditRole.Id;
+                FirstName = userToEdit.FirstName;
+                LastName = userToEdit.LastName;
+                Email = userToEdit.Email;
+                PaymentProfileID = userToEdit.PaymentProfileID;
+                OldRoleName = userToEditRole.Name;
             }
         }
     }

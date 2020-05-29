@@ -26,5 +26,13 @@ namespace PaymentAutomationLC.Models
             DateAdded = newUserViewModel.DateAdded;
             PaymentProfile = context.PaymentProfiles.Single(p => p.ID.Equals(newUserViewModel.PaymentProfileID));
         }
+
+        public static void EditUser(ApplicationUser userToEdit, NewUserViewModel editUserViewModel)
+        {
+            userToEdit.FirstName = editUserViewModel.FirstName;
+            userToEdit.LastName = editUserViewModel.LastName;
+            userToEdit.Email = editUserViewModel.Email;
+            userToEdit.PaymentProfileID = editUserViewModel.PaymentProfileID;
+        }
     }
 }
