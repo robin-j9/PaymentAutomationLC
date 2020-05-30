@@ -1,0 +1,28 @@
+﻿@model PaymentAutomationLC.ViewModels.ViewUsersViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Users</h1>
+
+<table class="table">
+    <tr>
+        <th>Role</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Date Joined</th>
+        <th>Payment Profile</th>
+    </tr>
+    @for(int i = 0; i < Model.Users.Count(); i++)
+    {
+        <tr>
+            <td>@Model.Roles[i][0]</td>
+            <td>@Model.Users[i].FirstName @Model.Users[i].LastName</td>
+            <td>@Model.Users[i].Email</td>
+            <td>@Model.Users[i].DateAdded</td>
+            <td>@Model.Users[i].PaymentProfile.Name</td>
+            <td><a asp-controller="User" asp-action="Edit" asp-route-id="@Model.Users[i].Id">Edit</a></td>
+        </tr>
+    }
+</table>
+<a asp-controller="User" asp-action="New">New User</a>

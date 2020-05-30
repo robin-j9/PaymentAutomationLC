@@ -1,0 +1,32 @@
+﻿@model PaymentAutomationLC.ViewModels.NewUserViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit User</h1>
+
+<form asp-controller="User" asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" value="@Model.FirstName" />
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" value="@Model.LastName"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" value="@Model.Email"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="PaymentProfileID"></label>
+        <select asp-for="PaymentProfileID" asp-items="Model.PaymentProfiles"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="IdentityRoleID"></label>
+        <select asp-for="IdentityRoleID" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleID"></select>
+    </div>
+    <input type="hidden" asp-for="UserID" value="@Model.UserID"/>
+    <input type="hidden" asp-for="OldRoleName" value="@Model.OldRoleName" />
+    <input type="submit" value="Edit User" />
+</form>
