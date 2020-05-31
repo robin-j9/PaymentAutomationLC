@@ -19,7 +19,7 @@
                 <a asp-controller="Payment" asp-action="Articles" asp-route-paymentMonthYear="@payment.MonthYear">View</a>
             </td>
             <td>
-                <a>View</a>
+                <a asp-controller="Payment" asp-action="Summary" asp-route-paymentId="@payment.ID" asp-route-paymentMonthYear="@payment.MonthYear">View</a>
             </td>
         </tr>
     }

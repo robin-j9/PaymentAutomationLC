@@ -4,6 +4,10 @@
 }
 
 <h1>@Model.MonthYear  Articles</h1>
+<a asp-controller="Payment" asp-action="Summary" 
+        asp-route-paymentId="@Model.ID" asp-route-paymentMonthYear="@Model.MonthYear">
+    Payment Summary
+</a>
 
 <table class="table">
     <tr>

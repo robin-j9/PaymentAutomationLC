@@ -60,5 +60,13 @@ namespace PaymentAutomationLC.Controllers
                                      .Single(p => p.MonthYear.Equals(paymentMonthYear));
             return View(payment);
         }
+
+        [Route("/Payment/{paymentMonthYear}/Summary")]
+        public IActionResult Summary(int paymentId, string paymentMonthYear)
+        {
+            Payment payment = context.Payments.Include(p => p.Articles)
+                                     .Single(p => p.ID.Equals(paymentId));
+            return View(payment);
+        }
     }
 }
