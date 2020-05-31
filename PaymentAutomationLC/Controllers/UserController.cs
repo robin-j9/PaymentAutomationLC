@@ -110,5 +110,13 @@ namespace PaymentAutomationLC.Controllers
             }
             return View(editUserViewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            ApplicationUser userToDelete = await userManager.FindByIdAsync(id);
+            await userManager.DeleteAsync(userToDelete);
+            return Redirect("/User/Index");
+        }
     }
 }
