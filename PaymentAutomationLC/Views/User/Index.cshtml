@@ -24,7 +24,11 @@
             <td><a asp-controller="User" asp-action="Edit" asp-route-id="@Model.Users[i].Id">Edit</a></td>
             <td>
                 <form asp-controller="User" asp-action="Delete" asp-route-id="@Model.Users[i].Id" method="post">
-                    <button type="submit" class="btn">Delete</button>
+                    <button type="submit" class="btn" 
+                            onclick="return confirm(
+                            'Are you sure you want to delete @Model.Users[i].FirstName @Model.Users[i].LastName?')">
+                            Delete
+                    </button>
                 </form>
             </td>
         </tr>
