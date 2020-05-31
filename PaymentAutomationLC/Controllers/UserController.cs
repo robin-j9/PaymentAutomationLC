@@ -17,7 +17,8 @@ namespace PaymentAutomationLC.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext context;
 
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, 
+        public UserController(UserManager<ApplicationUser> userManager, 
+                              RoleManager<IdentityRole> roleManager, 
                               ApplicationDbContext dbContext)
         {
             this.userManager = userManager;
@@ -51,7 +52,8 @@ namespace PaymentAutomationLC.Controllers
 
         public IActionResult New()
         {
-            NewUserViewModel newUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList());
+            NewUserViewModel newUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), 
+                                                                     context.Roles.ToList());
             return View(newUserViewModel);
         }
 
@@ -85,7 +87,8 @@ namespace PaymentAutomationLC.Controllers
             else 
                 userToEditRole = await roleManager.FindByNameAsync(userToEditRoles[0]);
 
-            NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), context.Roles.ToList(), userToEdit, userToEditRole);
+            NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), 
+                context.Roles.ToList(), userToEdit, userToEditRole);
             if (noRole) editUserViewModel.OldRoleName = "N/A";
             return View(editUserViewModel);
         }
@@ -109,6 +112,14 @@ namespace PaymentAutomationLC.Controllers
                 return Redirect("/User/Index");
             }
             return View(editUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            ApplicationUser userToDelete = await userManager.FindByIdAsync(id);
+            await userManager.DeleteAsync(userToDelete);
+            return Redirect("/User/Index");
         }
     }
 }
