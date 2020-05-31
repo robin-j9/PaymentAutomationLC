@@ -42,14 +42,15 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);    
+                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);
                 context.SaveChanges();
                 
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
                 Article.AddArticlesToDatabase(articles, payment, context);
                 context.SaveChanges();
+                return Redirect("/Payment/" + payment.MonthYear + "/Articles");
             }
-            return View();
+            return View(newPaymentViewModel);
         }
 
         [Route("/Payment/{paymentMonthYear}/Articles")]
