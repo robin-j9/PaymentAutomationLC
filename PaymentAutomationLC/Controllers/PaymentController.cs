@@ -9,6 +9,7 @@ using PaymentAutomationLC.Models;
 using PaymentAutomationLC.Data;
 using System.Diagnostics;
 using PaymentAutomationLC.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,14 +42,23 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);    
+                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);
                 context.SaveChanges();
                 
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
                 Article.AddArticlesToDatabase(articles, payment, context);
                 context.SaveChanges();
+                return Redirect("/Payment/" + payment.MonthYear + "/Articles");
             }
-            return View();
+            return View(newPaymentViewModel);
+        }
+
+        [Route("/Payment/{paymentMonthYear}/Articles")]
+        public IActionResult Articles(string paymentMonthYear)
+        {
+            Payment payment = context.Payments.Include(p => p.Articles)
+                                     .Single(p => p.MonthYear.Equals(paymentMonthYear));
+            return View(payment);
         }
     }
 }
