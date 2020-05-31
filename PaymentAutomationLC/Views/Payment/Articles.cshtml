@@ -1,0 +1,24 @@
+﻿@model PaymentAutomationLC.Models.Payment
+@{
+    ViewData["Title"] = "Articles";
+}
+
+<h1>@Model.MonthYear  Articles</h1>
+
+<table class="table">
+    <tr>
+        <th>Writer</th>
+        <th>Date Written</th>
+        <th>Article Title</th>
+        <th>Page Views</th>
+    </tr>
+    @foreach(var article in Model.Articles)
+    {
+        <tr>
+            <td>@article.Writer</td>
+            <td>@article.DateWritten</td>
+            <td>@article.ArticleTitle</td>
+            <td>@article.PageViews</td>
+        </tr>
+    }
+</table>

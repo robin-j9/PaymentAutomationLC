@@ -9,6 +9,7 @@ using PaymentAutomationLC.Models;
 using PaymentAutomationLC.Data;
 using System.Diagnostics;
 using PaymentAutomationLC.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,6 +50,14 @@ namespace PaymentAutomationLC.Controllers
                 context.SaveChanges();
             }
             return View();
+        }
+
+        [Route("/Payment/{paymentMonthYear}/Articles")]
+        public IActionResult Articles(string paymentMonthYear)
+        {
+            Payment payment = context.Payments.Include(p => p.Articles)
+                                     .Single(p => p.MonthYear.Equals(paymentMonthYear));
+            return View(payment);
         }
     }
 }
