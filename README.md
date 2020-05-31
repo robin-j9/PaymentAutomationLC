@@ -4,6 +4,8 @@ This project is a payment automation web application that allows businesses calc
 
 The first iteration of this app assumes that the .csv files will be uploaded with specific columns in a specific order and is tailored toward a very specific type of publication business.
 
+[Sample .csv file to test app](https://github.com/robin-j9/PaymentAutomationLC/blob/master/dummyData.csv)
+
 ## Tech Stack
 
 * C#
