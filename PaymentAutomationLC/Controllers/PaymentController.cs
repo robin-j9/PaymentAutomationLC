@@ -66,14 +66,33 @@ namespace PaymentAutomationLC.Controllers
         {
             Payment payment = context.Payments.Include(p => p.Articles)
                                      .Single(p => p.ID.Equals(paymentId));
-            // testing retrieval of articles per writer
             var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
-            List<string> writerTestList = new List<string>();
+            IList<ApplicationUserPayment> userPayments = new List<ApplicationUserPayment>();
             foreach(var group in articlesByWriter)
             {
-                writerTestList.Add(group.Key);
+                ApplicationUser user = context.Users.Include(p => p.PaymentProfile)
+                    .Single(u => (u.FirstName + " " + u.LastName).Equals(group.Key));
+                ApplicationUserPayment userPayment = new ApplicationUserPayment()
+                {
+                    ApplicationUser = user,
+                    Payment = payment,
+                    PaymentProfile = user.PaymentProfile
+                };
+
+                foreach(var article in group)
+                {
+                    userPayment.TotalPayment += userPayment.PaymentProfile.PayPerArticle;
+                    if (article.PageViews >= userPayment.PaymentProfile.MinimumPVForBonus)
+                    {
+                        userPayment.TotalPayment += userPayment.PaymentProfile.ArticleBonus;
+                    }
+                }
+
+                userPayments.Add(userPayment);
             }
-            return View(writerTestList);
+
+
+            return View(userPayments);
         }
     }
 }

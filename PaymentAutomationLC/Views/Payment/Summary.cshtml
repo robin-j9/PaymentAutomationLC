@@ -1,13 +1,22 @@
-﻿@model List<string>
+﻿@model List<PaymentAutomationLC.Models.ApplicationUserPayment>
 @{
     ViewData["Title"] = "Summary";
 }
 
-<h1>Payment Summary</h1>
+<h1>@Model[0].Payment.MonthYear Payment Summary</h1>
 
-@foreach(var writer in Model)
-{
-    <ul>
-        <li>@writer</li>
-    </ul>
-}
+<table class="table">
+    <tr>
+        <th>Writer</th>
+        <th>Payment Profile</th>
+        <th>TotalPayment</th>
+    </tr>
+    @foreach(var userPayment in Model)
+    {
+        <tr>
+            <td>@userPayment.ApplicationUser.FirstName  @userPayment.ApplicationUser.LastName</td>
+            <td>@userPayment.PaymentProfile.Name</td>
+            <td>@userPayment.TotalPayment</td>
+        </tr>
+    }
+</table>
