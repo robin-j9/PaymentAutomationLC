@@ -1,7 +1,13 @@
-﻿@model PaymentAutomationLC.Models.Payment
+﻿@model List<string>
 @{
     ViewData["Title"] = "Summary";
 }
 
-<h1>@Model.MonthYear Payment Summary</h1>
+<h1>Payment Summary</h1>
 
+@foreach(var writer in Model)
+{
+    <ul>
+        <li>@writer</li>
+    </ul>
+}

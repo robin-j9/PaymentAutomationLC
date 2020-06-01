@@ -66,8 +66,14 @@ namespace PaymentAutomationLC.Controllers
         {
             Payment payment = context.Payments.Include(p => p.Articles)
                                      .Single(p => p.ID.Equals(paymentId));
-
-            return View(payment);
+            // testing retrieval of articles per writer
+            var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
+            List<string> writerTestList = new List<string>();
+            foreach(var group in articlesByWriter)
+            {
+                writerTestList.Add(group.Key);
+            }
+            return View(writerTestList);
         }
     }
 }

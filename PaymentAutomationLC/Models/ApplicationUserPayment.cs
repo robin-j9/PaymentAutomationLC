@@ -14,8 +14,6 @@ namespace PaymentAutomationLC.Models
         public Payment Payment { get; set; }
 
         public PaymentProfile PaymentProfile { get; set; }
-        public IEnumerable<Article> Articles { get; set; }
-        public IEnumerable<Article> ArticlesWithBonus { get; set; }
         public double TotalPayment { get; set; }
     }
 }

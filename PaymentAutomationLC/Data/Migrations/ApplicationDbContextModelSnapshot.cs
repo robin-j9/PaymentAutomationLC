@@ -237,9 +237,17 @@ namespace PaymentAutomationLC.Data.Migrations
                     b.Property<int>("PaymentID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PaymentProfileID")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalPayment")
+                        .HasColumnType("float");
+
                     b.HasKey("ApplicationUserID", "PaymentID");
 
                     b.HasIndex("PaymentID");
+
+                    b.HasIndex("PaymentProfileID");
 
                     b.ToTable("ApplicationUserPayments");
                 });
@@ -385,6 +393,10 @@ namespace PaymentAutomationLC.Data.Migrations
                         .HasForeignKey("PaymentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("PaymentAutomationLC.Models.PaymentProfile", "PaymentProfile")
+                        .WithMany()
+                        .HasForeignKey("PaymentProfileID");
                 });
 
             modelBuilder.Entity("PaymentAutomationLC.Models.Article", b =>
