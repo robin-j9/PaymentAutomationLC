@@ -15,6 +15,7 @@ namespace PaymentAutomationLC.Models
         public int ID { get; set; }
         public string MonthYear { get; set; }
         public IEnumerable<Article> Articles { get; set; }
+        public IList<ApplicationUserPayment> ApplicationUserPayments { get; set; }
 
         public static IList<Article> ReadFile(IFormFile file)
         {

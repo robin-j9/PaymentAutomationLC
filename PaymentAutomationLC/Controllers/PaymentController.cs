@@ -66,6 +66,7 @@ namespace PaymentAutomationLC.Controllers
         {
             Payment payment = context.Payments.Include(p => p.Articles)
                                      .Single(p => p.ID.Equals(paymentId));
+
             return View(payment);
         }
     }

@@ -15,6 +15,7 @@ namespace PaymentAutomationLC.Models
         public DateTime DateAdded { get; set; }
         public int PaymentProfileID { get; set; }
         public PaymentProfile PaymentProfile { get; set; }
+        public IList<ApplicationUserPayment> ApplicationUserPayments { get; set; }
 
         public ApplicationUser() { }
 

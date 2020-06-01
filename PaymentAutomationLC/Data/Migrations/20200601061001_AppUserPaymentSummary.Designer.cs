@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentAutomationLC.Data;
 
 namespace PaymentAutomationLC.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200601061001_AppUserPaymentSummary")]
+    partial class AppUserPaymentSummary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,6 +152,21 @@ namespace PaymentAutomationLC.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PaymentAutomationLC.Models.AppUserPaymentSummary", b =>
+                {
+                    b.Property<string>("ApplicationUserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("PaymentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ApplicationUserID", "PaymentID");
+
+                    b.HasIndex("PaymentID");
+
+                    b.ToTable("AppUserPaymentSummaries");
+                });
+
             modelBuilder.Entity("PaymentAutomationLC.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -227,21 +244,6 @@ namespace PaymentAutomationLC.Data.Migrations
                     b.HasIndex("PaymentProfileID");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("PaymentAutomationLC.Models.ApplicationUserPayment", b =>
-                {
-                    b.Property<string>("ApplicationUserID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("PaymentID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ApplicationUserID", "PaymentID");
-
-                    b.HasIndex("PaymentID");
-
-                    b.ToTable("ApplicationUserPayments");
                 });
 
             modelBuilder.Entity("PaymentAutomationLC.Models.Article", b =>
@@ -363,26 +365,26 @@ namespace PaymentAutomationLC.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PaymentAutomationLC.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("PaymentAutomationLC.Models.PaymentProfile", "PaymentProfile")
-                        .WithMany()
-                        .HasForeignKey("PaymentProfileID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PaymentAutomationLC.Models.ApplicationUserPayment", b =>
+            modelBuilder.Entity("PaymentAutomationLC.Models.AppUserPaymentSummary", b =>
                 {
                     b.HasOne("PaymentAutomationLC.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ApplicationUserPayments")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PaymentAutomationLC.Models.Payment", "Payment")
-                        .WithMany("ApplicationUserPayments")
+                        .WithMany("AppUserPaymentSummaries")
                         .HasForeignKey("PaymentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PaymentAutomationLC.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("PaymentAutomationLC.Models.PaymentProfile", "PaymentProfile")
+                        .WithMany()
+                        .HasForeignKey("PaymentProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
