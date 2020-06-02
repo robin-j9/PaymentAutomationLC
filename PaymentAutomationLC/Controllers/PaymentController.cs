@@ -60,5 +60,24 @@ namespace PaymentAutomationLC.Controllers
                                      .Single(p => p.MonthYear.Equals(paymentMonthYear));
             return View(payment);
         }
+
+        [Route("/Payment/{paymentMonthYear}/Summary")]
+        public IActionResult Summary(int paymentId, string paymentMonthYear)
+        {
+            Payment payment = Payment.GetById(paymentId, context);
+            var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
+
+            IList<ApplicationUserPayment> userPayments = new List<ApplicationUserPayment>();
+            
+            foreach(var group in articlesByWriter)
+            {
+                ApplicationUserPayment userPayment = new ApplicationUserPayment(context, group, payment);
+                ApplicationUserPayment.CalculateUserPayment(userPayment, group);
+
+                userPayments.Add(userPayment);
+            }
+
+            return View(userPayments);
+        }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentAutomationLC.Data;
 
 namespace PaymentAutomationLC.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200601071614_ApplicationUserPayment")]
+    partial class ApplicationUserPayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,12 +237,6 @@ namespace PaymentAutomationLC.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PaymentID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumArticlesWithBonus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumArticlesWithoutBonus")
                         .HasColumnType("int");
 
                     b.Property<int?>("PaymentProfileID")
