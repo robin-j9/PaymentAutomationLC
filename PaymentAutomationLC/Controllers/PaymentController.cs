@@ -64,29 +64,17 @@ namespace PaymentAutomationLC.Controllers
         [Route("/Payment/{paymentMonthYear}/Summary")]
         public IActionResult Summary(int paymentId, string paymentMonthYear)
         {
-            Payment payment = context.Payments.Include(p => p.Articles)
-                                     .Single(p => p.ID.Equals(paymentId));
+            // TODO: CLEAN UP
+            // TODO: ADD NUMBER OF ARTICLES/BONUS ARTICLES IN SUMMARY (create view model?)
+            Payment payment = Payment.GetById(paymentId, context);
             var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
+
             IList<ApplicationUserPayment> userPayments = new List<ApplicationUserPayment>();
+            
             foreach(var group in articlesByWriter)
             {
-                ApplicationUser user = context.Users.Include(p => p.PaymentProfile)
-                    .Single(u => (u.FirstName + " " + u.LastName).Equals(group.Key));
-                ApplicationUserPayment userPayment = new ApplicationUserPayment()
-                {
-                    ApplicationUser = user,
-                    Payment = payment,
-                    PaymentProfile = user.PaymentProfile
-                };
-
-                foreach(var article in group)
-                {
-                    userPayment.TotalPayment += userPayment.PaymentProfile.PayPerArticle;
-                    if (article.PageViews >= userPayment.PaymentProfile.MinimumPVForBonus)
-                    {
-                        userPayment.TotalPayment += userPayment.PaymentProfile.ArticleBonus;
-                    }
-                }
+                ApplicationUserPayment userPayment = new ApplicationUserPayment(context, group, payment);
+                ApplicationUserPayment.CalculateUserPayment(userPayment, group);
 
                 userPayments.Add(userPayment);
             }

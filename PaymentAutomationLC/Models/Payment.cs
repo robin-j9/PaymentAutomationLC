@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using PaymentAutomationLC.Data;
 using PaymentAutomationLC.ViewModels;
 using System;
@@ -58,5 +59,12 @@ namespace PaymentAutomationLC.Models
             }
             return payment;
         }
+
+        public static Payment GetById(int paymentId, ApplicationDbContext context)
+        {
+            return context.Payments.Include(p => p.Articles)
+                                     .Single(p => p.ID.Equals(paymentId));
+        }
+
     }
 }
