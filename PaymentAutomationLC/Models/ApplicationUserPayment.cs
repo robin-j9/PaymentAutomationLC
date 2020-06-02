@@ -16,6 +16,9 @@ namespace PaymentAutomationLC.Models
         public Payment Payment { get; set; }
 
         public PaymentProfile PaymentProfile { get; set; }
+        public int NumArticlesWithoutBonus { get; set; }
+        public int NumArticlesWithBonus { get; set; }
+
         public double TotalPayment { get; set; }
 
         public ApplicationUserPayment() { }
@@ -36,7 +39,9 @@ namespace PaymentAutomationLC.Models
                 if (article.PageViews >= userPayment.PaymentProfile.MinimumPVForBonus)
                 {
                     userPayment.TotalPayment += userPayment.PaymentProfile.ArticleBonus;
+                    userPayment.NumArticlesWithBonus++;
                 }
+                else userPayment.NumArticlesWithoutBonus++;
             }
         }
     }

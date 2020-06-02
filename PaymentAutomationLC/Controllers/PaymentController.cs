@@ -64,8 +64,6 @@ namespace PaymentAutomationLC.Controllers
         [Route("/Payment/{paymentMonthYear}/Summary")]
         public IActionResult Summary(int paymentId, string paymentMonthYear)
         {
-            // TODO: CLEAN UP
-            // TODO: ADD NUMBER OF ARTICLES/BONUS ARTICLES IN SUMMARY (create view model?)
             Payment payment = Payment.GetById(paymentId, context);
             var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
 
@@ -78,7 +76,6 @@ namespace PaymentAutomationLC.Controllers
 
                 userPayments.Add(userPayment);
             }
-
 
             return View(userPayments);
         }
