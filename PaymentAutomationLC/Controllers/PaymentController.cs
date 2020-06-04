@@ -94,12 +94,8 @@ namespace PaymentAutomationLC.Controllers
 
         public IActionResult UserHistory(string id)
         {
-            IList<ApplicationUserPayment> userPayments = context.ApplicationUserPayments
-                .Include(p => p.Payment)
-                .Include(p => p.ApplicationUser)
-                .Include(p => p.PaymentProfile)
-                .Where(p => p.ApplicationUserId.Equals(id)).ToList();
-            return View(userPayments);
+            UserHistoryViewModel userHistoryViewModel = new UserHistoryViewModel(id, context);   
+            return View(userHistoryViewModel);
         }
     }
 }
