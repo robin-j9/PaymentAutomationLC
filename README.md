@@ -19,7 +19,7 @@ The first iteration of this app assumes that the .csv files will be uploaded wit
 * User registration with roles
 * .csv file uploading and parsing
 * Payment parameter customization and automatic payment calculation
-* Ability to review payment records as both Admin and User
+* Ability to review payment records
 
 ## License
 
