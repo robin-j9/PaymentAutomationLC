@@ -13,7 +13,7 @@ namespace PaymentAutomationLC.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateAdded { get; set; }
-        public int PaymentProfileID { get; set; }
+        public int PaymentProfileId { get; set; }
         public PaymentProfile PaymentProfile { get; set; }
         public IList<ApplicationUserPayment> ApplicationUserPayments { get; set; }
 
@@ -25,7 +25,7 @@ namespace PaymentAutomationLC.Models
             LastName = newUserViewModel.LastName;
             Email = newUserViewModel.Email;
             DateAdded = newUserViewModel.DateAdded;
-            PaymentProfile = context.PaymentProfiles.Single(p => p.ID.Equals(newUserViewModel.PaymentProfileID));
+            PaymentProfile = context.PaymentProfiles.Single(p => p.Id.Equals(newUserViewModel.PaymentProfileId));
         }
 
         public static void EditUser(ApplicationUser userToEdit, NewUserViewModel editUserViewModel)
@@ -33,7 +33,7 @@ namespace PaymentAutomationLC.Models
             userToEdit.FirstName = editUserViewModel.FirstName;
             userToEdit.LastName = editUserViewModel.LastName;
             userToEdit.Email = editUserViewModel.Email;
-            userToEdit.PaymentProfileID = editUserViewModel.PaymentProfileID;
+            userToEdit.PaymentProfileId = editUserViewModel.PaymentProfileId;
         }
     }
 }

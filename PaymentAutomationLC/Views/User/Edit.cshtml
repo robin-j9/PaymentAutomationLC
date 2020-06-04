@@ -19,14 +19,14 @@
         <input asp-for="Email" value="@Model.Email"/>
     </div>
     <div class="form-group">
-        <label asp-for="PaymentProfileID"></label>
-        <select asp-for="PaymentProfileID" asp-items="Model.PaymentProfiles"></select>
+        <label asp-for="PaymentProfileId"></label>
+        <select asp-for="PaymentProfileId" asp-items="Model.PaymentProfiles"></select>
     </div>
     <div class="form-group">
-        <label asp-for="IdentityRoleID"></label>
-        <select asp-for="IdentityRoleID" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleID"></select>
+        <label asp-for="IdentityRoleId"></label>
+        <select asp-for="IdentityRoleId" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleId"></select>
     </div>
-    <input type="hidden" asp-for="UserID" value="@Model.UserID"/>
+    <input type="hidden" asp-for="UserId" value="@Model.UserId"/>
     <input type="hidden" asp-for="OldRoleName" value="@Model.OldRoleName" />
     <input type="submit" value="Edit User" />
 </form>

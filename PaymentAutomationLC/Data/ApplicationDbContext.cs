@@ -24,7 +24,7 @@ namespace PaymentAutomationLC.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ApplicationUserPayment>()
-                .HasKey(a => new { a.ApplicationUserID, a.PaymentID });
+                .HasKey(a => new { a.ApplicationUserId, a.PaymentId });
         }
     }
 }
