@@ -64,7 +64,7 @@ namespace PaymentAutomationLC.Controllers
             {
                 ApplicationUser newUser = new ApplicationUser(newUserViewModel, context);
 
-                IdentityRole roleToAdd = await roleManager.FindByIdAsync(newUserViewModel.IdentityRoleID);
+                IdentityRole roleToAdd = await roleManager.FindByIdAsync(newUserViewModel.IdentityRoleId);
                 await userManager.AddToRoleAsync(newUser, roleToAdd.Name);
 
                 context.Users.Add(newUser);
@@ -98,8 +98,8 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser userToEdit = await userManager.FindByIdAsync(editUserViewModel.UserID);
-                IdentityRole newRole = await roleManager.FindByIdAsync(editUserViewModel.IdentityRoleID);
+                ApplicationUser userToEdit = await userManager.FindByIdAsync(editUserViewModel.UserId);
+                IdentityRole newRole = await roleManager.FindByIdAsync(editUserViewModel.IdentityRoleId);
 
                 if (editUserViewModel.OldRoleName == "N/A")
                     await userManager.AddToRoleAsync(userToEdit, newRole.Name);

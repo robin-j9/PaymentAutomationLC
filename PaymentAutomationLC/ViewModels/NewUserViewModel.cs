@@ -11,14 +11,14 @@ namespace PaymentAutomationLC.ViewModels
 {
     public class NewUserViewModel
     {
-        public string UserID { get; set; }
+        public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public DateTime DateAdded { get; set; }
-        public int PaymentProfileID { get; set; }
+        public int PaymentProfileId { get; set; }
         public List<SelectListItem> PaymentProfiles { get; set; } = new List<SelectListItem>();
-        public string IdentityRoleID { get; set; }
+        public string IdentityRoleId { get; set; }
         public List<SelectListItem> IdentityRoles { get; set; } = new List<SelectListItem>();
         public string OldRoleName { get; set; }
 
@@ -29,7 +29,7 @@ namespace PaymentAutomationLC.ViewModels
             {
                 PaymentProfiles.Add(new SelectListItem()
                 {
-                    Value = profile.ID.ToString(),
+                    Value = profile.Id.ToString(),
                     Text = profile.Name.ToString()
                 });
             }
@@ -45,12 +45,12 @@ namespace PaymentAutomationLC.ViewModels
 
             if(userToEdit != null && userToEditRole != null)
             {
-                UserID = userToEdit.Id;
-                IdentityRoleID = userToEditRole.Id;
+                UserId = userToEdit.Id;
+                IdentityRoleId = userToEditRole.Id;
                 FirstName = userToEdit.FirstName;
                 LastName = userToEdit.LastName;
                 Email = userToEdit.Email;
-                PaymentProfileID = userToEdit.PaymentProfileID;
+                PaymentProfileId = userToEdit.PaymentProfileId;
                 OldRoleName = userToEditRole.Name;
             }
         }

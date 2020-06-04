@@ -9,7 +9,7 @@ namespace PaymentAutomationLC.Models
 {
     public class PaymentProfile
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public double PayPerArticle { get; set; }
         public double ArticleBonus { get; set; }
@@ -27,7 +27,7 @@ namespace PaymentAutomationLC.Models
 
         public static void RetrieveAndEditPaymentProfile(PaymentProfileViewModel paymentProfileViewModel, ApplicationDbContext context)
         {
-            PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.ID == paymentProfileViewModel.PaymentProfileID);
+            PaymentProfile profileToEdit = context.PaymentProfiles.Single(p => p.Id == paymentProfileViewModel.PaymentProfileId);
             profileToEdit.Name = paymentProfileViewModel.Name;
             profileToEdit.PayPerArticle = paymentProfileViewModel.PayPerArticle;
             profileToEdit.ArticleBonus = paymentProfileViewModel.ArticleBonus;

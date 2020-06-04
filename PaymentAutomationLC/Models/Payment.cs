@@ -13,7 +13,7 @@ namespace PaymentAutomationLC.Models
 {
     public class Payment
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string MonthYear { get; set; }
         public IEnumerable<Article> Articles { get; set; }
         public IList<ApplicationUserPayment> ApplicationUserPayments { get; set; }
@@ -63,7 +63,7 @@ namespace PaymentAutomationLC.Models
         public static Payment GetById(int paymentId, ApplicationDbContext context)
         {
             return context.Payments.Include(p => p.Articles)
-                                     .Single(p => p.ID.Equals(paymentId));
+                                     .Single(p => p.Id.Equals(paymentId));
         }
 
     }
