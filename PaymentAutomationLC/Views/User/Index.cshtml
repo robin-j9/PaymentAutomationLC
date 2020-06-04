@@ -12,6 +12,7 @@
         <th>Email</th>
         <th>Date Joined</th>
         <th>Payment Profile</th>
+        <th>Payment History</th>
     </tr>
     @for(int i = 0; i < Model.Users.Count(); i++)
     {
@@ -21,7 +22,7 @@
             <td>@Model.Users[i].Email</td>
             <td>@Model.Users[i].DateAdded</td>
             <td>@Model.Users[i].PaymentProfile.Name</td>
-            <td><a asp-controller="Payment" asp-action="Summary" asp-route-userId="@Model.Users[i].Id">Payments</a></td>
+            <td><a asp-controller="Payment" asp-action="UserHistory" asp-route-id="@Model.Users[i].Id">View</a></td>
             <td><a asp-controller="User" asp-action="Edit" asp-route-id="@Model.Users[i].Id">Edit</a></td>
             <td>
                 <form asp-controller="User" asp-action="Delete" asp-route-id="@Model.Users[i].Id" method="post">
