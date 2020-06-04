@@ -1,26 +1,33 @@
-﻿@model List<PaymentAutomationLC.Models.ApplicationUserPayment>
+﻿@model PaymentAutomationLC.ViewModels.UserHistoryViewModel
 @{
     ViewData["Title"] = "UserHistory";
 }
 
-<h1>Payment History for @Model[0].ApplicationUser.FirstName  @Model[0].ApplicationUser.LastName</h1>
+<h1>Payment History for @Model.User.FirstName @Model.User.LastName</h1>
 
-<table class="table">
-    <tr>
-        <th>Payment Period</th>
-        <th>Payment Profile</th>
-        <th>Articles (w/o Bonus)</th>
-        <th>Articles (w/ Bonus)</th>
-        <th>TotalPayment</th>
-    </tr>
-    @foreach (var userPayment in Model)
-    {
+@if(Model.UserPayments.Count() != 0)
+{
+    <table class="table">
         <tr>
-            <td>@userPayment.Payment.MonthYear</td>
-            <td>@userPayment.PaymentProfile.Name</td>
-            <td>@userPayment.NumArticlesWithoutBonus</td>
-            <td>@userPayment.NumArticlesWithBonus</td>
-            <td>@userPayment.TotalPayment</td>
+            <th>Payment Period</th>
+            <th>Payment Profile</th>
+            <th>Articles (w/o Bonus)</th>
+            <th>Articles (w/ Bonus)</th>
+            <th>TotalPayment</th>
         </tr>
-    }
-</table>
+        @foreach (var userPayment in Model.UserPayments)
+        {
+            <tr>
+                <td>@userPayment.Payment.MonthYear</td>
+                <td>@userPayment.PaymentProfile.Name</td>
+                <td>@userPayment.NumArticlesWithoutBonus</td>
+                <td>@userPayment.NumArticlesWithBonus</td>
+                <td>@userPayment.TotalPayment</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No Payment Records</p>
+}
