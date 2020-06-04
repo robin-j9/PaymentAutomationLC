@@ -87,7 +87,7 @@ namespace PaymentAutomationLC.Controllers
                 .Include(p => p.Payment)
                 .Include(p => p.ApplicationUser)
                 .Include(p => p.PaymentProfile)
-                .Where(p => p.PaymentID.Equals(id)).ToList();
+                .Where(p => p.PaymentId.Equals(id)).ToList();
 
             return View(userPayments);
         }
