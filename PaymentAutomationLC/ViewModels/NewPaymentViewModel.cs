@@ -14,6 +14,7 @@ namespace PaymentAutomationLC.ViewModels
         [Required]
         [Display(Name = "Month and year for payment: (Please format as 'July 2020')")]
         public string MonthYear { get; set; }
+        [Required]
         public IFormFile File { get; set; }
         public NewPaymentViewModel() 
         {
