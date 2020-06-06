@@ -71,6 +71,9 @@ namespace PaymentAutomationLC.Controllers
                 context.SaveChanges();
                 return Redirect("/User/Index");
             }
+            NewUserViewModel.PopulateDropdowns(context.PaymentProfiles.ToList(),
+                                               context.Roles.ToList(),
+                                               newUserViewModel);
             return View(newUserViewModel);
         }
 
