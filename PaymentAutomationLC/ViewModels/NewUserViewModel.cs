@@ -34,23 +34,7 @@ namespace PaymentAutomationLC.ViewModels
         public NewUserViewModel() { }
         public NewUserViewModel(IEnumerable<PaymentProfile> paymentProfiles, IEnumerable<IdentityRole> roles, [Optional]ApplicationUser userToEdit, [Optional]IdentityRole userToEditRole)
         {
-            foreach(var profile in paymentProfiles)
-            {
-                PaymentProfiles.Add(new SelectListItem()
-                {
-                    Value = profile.Id.ToString(),
-                    Text = profile.Name.ToString()
-                });
-            }
-
-            foreach(var role in roles)
-            {
-                IdentityRoles.Add(new SelectListItem()
-                {
-                    Value = role.Id,
-                    Text = role.Name
-                });
-            }
+            PopulateDropdowns(paymentProfiles, roles, this);
 
             if(userToEdit != null && userToEditRole != null)
             {
@@ -61,6 +45,27 @@ namespace PaymentAutomationLC.ViewModels
                 Email = userToEdit.Email;
                 PaymentProfileId = userToEdit.PaymentProfileId;
                 OldRoleName = userToEditRole.Name;
+            }
+        }
+
+        public static void PopulateDropdowns(IEnumerable<PaymentProfile> paymentProfiles, IEnumerable<IdentityRole> roles, NewUserViewModel newUserViewModel)
+        {
+            foreach (var profile in paymentProfiles)
+            {
+                newUserViewModel.PaymentProfiles.Add(new SelectListItem()
+                {
+                    Value = profile.Id.ToString(),
+                    Text = profile.Name.ToString()
+                });
+            }
+
+            foreach (var role in roles)
+            {
+                newUserViewModel.IdentityRoles.Add(new SelectListItem()
+                {
+                    Value = role.Id,
+                    Text = role.Name
+                });
             }
         }
     }
