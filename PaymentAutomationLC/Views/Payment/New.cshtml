@@ -8,13 +8,13 @@
 <form asp-controller="Payment" asp-action="New" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="MonthYear"></label>
-        <input asp-for="MonthYear" />
+        <input asp-for="MonthYear" class="form-control col-md-6"/>
         <span asp-validation-for="MonthYear"></span>
     </div>
     <div class="form-group">
         <label asp-for="File">Select .csv file to upload: </label>
-        <input asp-for="File"/>
+        <input asp-for="File" class="form-control col-md-6"/>
         <span asp-validation-for="File"></span>
     </div>
-        <input type="submit" value="Upload"/>
+        <input type="submit" value="Upload" class="btn btn-primary"/>
 </form>
