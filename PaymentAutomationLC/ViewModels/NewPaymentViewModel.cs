@@ -11,7 +11,7 @@ namespace PaymentAutomationLC.ViewModels
     public class NewPaymentViewModel
     {
         // HOLD: need to figure out new payment form dropdown menus first
-        [Required]
+        [Required(ErrorMessage = "You must enter a payment name (payment month and year).")]
         [Display(Name = "Month and year for payment: (Please format as 'July 2020')")]
         public string MonthYear { get; set; }
         [Required]
