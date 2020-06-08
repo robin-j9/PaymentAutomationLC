@@ -8,23 +8,23 @@
 <form asp-controller="User" asp-action="Edit" method="post">
     <div class="form-group">
         <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" value="@Model.FirstName" />
+        <input asp-for="FirstName" value="@Model.FirstName" class="form-control col-md-6"/>
     </div>
     <div class="form-group">
         <label asp-for="LastName"></label>
-        <input asp-for="LastName" value="@Model.LastName"/>
+        <input asp-for="LastName" value="@Model.LastName" class="form-control col-md-6"/>
     </div>
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" value="@Model.Email"/>
+        <input asp-for="Email" value="@Model.Email" class="form-control col-md-6"/>
     </div>
     <div class="form-group">
         <label asp-for="PaymentProfileId"></label>
-        <select asp-for="PaymentProfileId" asp-items="Model.PaymentProfiles"></select>
+        <select asp-for="PaymentProfileId" asp-items="Model.PaymentProfiles" class="form-control col-md-6"></select>
     </div>
     <div class="form-group">
         <label asp-for="IdentityRoleId"></label>
-        <select asp-for="IdentityRoleId" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleId"></select>
+        <select asp-for="IdentityRoleId" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleId" class="form-control col-md-6"></select>
     </div>
     <input type="hidden" asp-for="UserId" value="@Model.UserId"/>
     <input type="hidden" asp-for="OldRoleName" value="@Model.OldRoleName" />
