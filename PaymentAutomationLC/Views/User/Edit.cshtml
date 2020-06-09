@@ -3,30 +3,36 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit User</h1>
+<h1 class="text-center">Edit User</h1>
 
-<form asp-controller="User" asp-action="Edit" method="post">
-    <div class="form-group">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" value="@Model.FirstName" class="form-control col-md-6"/>
-    </div>
-    <div class="form-group">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" value="@Model.LastName" class="form-control col-md-6"/>
+<form asp-controller="User" asp-action="Edit" method="post" class="form-center">
+    <div class="row form-group">
+        <div class="col">
+            <div>
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" value="@Model.FirstName" class="form-control"/>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" value="@Model.LastName" class="form-control"/>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" value="@Model.Email" class="form-control col-md-6"/>
+        <input asp-for="Email" value="@Model.Email" class="form-control"/>
     </div>
     <div class="form-group">
         <label asp-for="PaymentProfileId"></label>
-        <select asp-for="PaymentProfileId" asp-items="Model.PaymentProfiles" class="form-control col-md-6"></select>
+        <select asp-for="PaymentProfileId" asp-items="Model.PaymentProfiles" class="form-control"></select>
     </div>
     <div class="form-group">
         <label asp-for="IdentityRoleId"></label>
-        <select asp-for="IdentityRoleId" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleId" class="form-control col-md-6"></select>
+        <select asp-for="IdentityRoleId" asp-items="Model.IdentityRoles" value="@Model.IdentityRoleId" class="form-control"></select>
     </div>
     <input type="hidden" asp-for="UserId" value="@Model.UserId"/>
     <input type="hidden" asp-for="OldRoleName" value="@Model.OldRoleName" />
-    <input type="submit" value="Edit User" />
+    <input type="submit" value="Edit User" class="btn btn-primary btn-block"/>
 </form>

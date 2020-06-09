@@ -24,7 +24,7 @@ namespace PaymentAutomationLC.ViewModels
         public double ArticleBonus { get; set; }
         [Required]
         [Range(10000, 1000000)]
-        [Display(Name = "Minimum PV For Bonus")]
+        [Display(Name = "Min PV For Bonus")]
         public int MinimumPVForBonus { get; set; }
         
         public PaymentProfileViewModel() { }

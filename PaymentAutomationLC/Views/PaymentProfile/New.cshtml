@@ -3,28 +3,36 @@
     ViewData["Title"] = "AddProfile";
 }
 
-<h1>New Payment Profile</h1>
+<h1 class="text-center">New Payment Profile</h1>
 
-<form asp-controller="PaymentProfile" asp-action="New" method="post">
+<form asp-controller="PaymentProfile" asp-action="New" method="post" class="form-center">
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control col-md-6"/>
+        <input asp-for="Name" class="form-control"/>
         <span asp-validation-for="Name"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="PayPerArticle"></label>
-        <input asp-for="PayPerArticle" class="form-control col-md-6"/>
-        <span asp-validation-for="PayPerArticle"></span>
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label asp-for="PayPerArticle"></label>
+                <input asp-for="PayPerArticle" class="form-control"/>
+                <span asp-validation-for="PayPerArticle"></span>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label asp-for="ArticleBonus"></label>
+                <input asp-for="ArticleBonus" class="form-control"/>
+                <span asp-validation-for="ArticleBonus"></span>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label asp-for="MinimumPVForBonus"></label>
+                <input asp-for="MinimumPVForBonus" class="form-control"/>
+                <span asp-validation-for="MinimumPVForBonus"></span>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="ArticleBonus"></label>
-        <input asp-for="ArticleBonus" class="form-control col-md-6"/>
-        <span asp-validation-for="ArticleBonus"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="MinimumPVForBonus"></label>
-        <input asp-for="MinimumPVForBonus" class="form-control col-md-6"/>
-        <span asp-validation-for="MinimumPVForBonus"></span>
-    </div>
-    <input type="submit" value="Add Profile" class="btn btn-primary" />
+    <input type="submit" value="Add Profile" class="btn btn-primary btn-block" />
 </form>

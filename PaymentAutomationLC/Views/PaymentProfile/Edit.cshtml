@@ -3,26 +3,34 @@
     ViewData["Title"] = "EditProfile";
 }
 
-<h1>Edit Payment Profile - @Model.Name</h1>
+<h1 class="text-center">Edit Payment Profile - @Model.Name</h1>
 
-<form asp-controller="PaymentProfile" asp-action="Edit" method="post">
+<form asp-controller="PaymentProfile" asp-action="Edit" method="post" class="form-center">
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" value="@Model.Name" class="form-control col-md-6" />
+        <input asp-for="Name" value="@Model.Name" class="form-control" />
     </div>
-    <div class="form-group">
-        <label asp-for="PayPerArticle"></label>
-        <input asp-for="PayPerArticle" value="@Model.PayPerArticle" class="form-control col-md-6"/>
-    </div>
-    <div class="form-group">
-        <label asp-for="ArticleBonus"></label>
-        <input asp-for="ArticleBonus" value="@Model.ArticleBonus" class="form-control col-md-6"/>
-    </div>
-    <div class="form-group">
-        <label asp-for="MinimumPVForBonus"></label>
-        <input asp-for="MinimumPVForBonus" value="@Model.MinimumPVForBonus" class="form-control col-md-6"/>
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label asp-for="PayPerArticle"></label>
+                <input asp-for="PayPerArticle" value="@Model.PayPerArticle" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label asp-for="ArticleBonus"></label>
+                <input asp-for="ArticleBonus" value="@Model.ArticleBonus" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label asp-for="MinimumPVForBonus"></label>
+                <input asp-for="MinimumPVForBonus" value="@Model.MinimumPVForBonus" class="form-control"/>
+            </div>
+        </div>
     </div>
     <input type="hidden" asp-for="PaymentProfileId" value="@Model.PaymentProfileId" />
-    <input type="submit" value="Edit Profile" />
+    <input type="submit" value="Edit Profile" class="btn btn-primary btn-block"/>
 </form>
 
