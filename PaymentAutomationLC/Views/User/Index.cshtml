@@ -20,7 +20,7 @@
             <td>@Model.Roles[i][0]</td>
             <td>@Model.Users[i].FirstName @Model.Users[i].LastName</td>
             <td>@Model.Users[i].Email</td>
-            <td>@Model.Users[i].DateAdded</td>
+            <td>@Model.Users[i].DateAdded.ToString("d")</td>
             <td>@Model.Users[i].PaymentProfile.Name</td>
             <td><a asp-controller="Payment" asp-action="UserHistory" asp-route-id="@Model.Users[i].Id">View</a></td>
             <td><a asp-controller="User" asp-action="Edit" asp-route-id="@Model.Users[i].Id">Edit</a></td>
