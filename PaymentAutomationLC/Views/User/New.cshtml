@@ -1,34 +1,40 @@
 ﻿@model PaymentAutomationLC.ViewModels.NewUserViewModel
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "New User";
 }
 
-<h1>Add</h1>
+<h1 class="text-center">New User</h1>
 
-<form asp-controller="User" asp-action="New" method="post">
-    <div class="form-group">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" />
-        <span asp-validation-for="FirstName"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" />
-        <span asp-validation-for="LastName"></span>
+<form asp-controller="User" asp-action="New" method="post" class="form-center">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control"/>
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" />
+        <input asp-for="Email" class="form-control"/>
         <span asp-validation-for="Email"></span>
     </div>
     <div class="form-group">
         <label asp-for="PaymentProfileId"></label>
-        <select asp-for="PaymentProfileId" asp-items="Model.PaymentProfiles"></select>
+        <select asp-for="PaymentProfileId" asp-items="Model.PaymentProfiles" class="form-control"></select>
     </div>
     <div class="form-group">
         <label asp-for="IdentityRoleId"></label>
-        <select asp-for="IdentityRoleId" asp-items="Model.IdentityRoles"></select>
+        <select asp-for="IdentityRoleId" asp-items="Model.IdentityRoles" class="form-control"></select>
     </div>
     <input type="hidden" asp-for="DateAdded" value="@DateTime.Now" />
-    <input type="submit" value="Add User" />
+    <input type="submit" value="Add User" class="btn btn-primary btn-block"/>
 </form>

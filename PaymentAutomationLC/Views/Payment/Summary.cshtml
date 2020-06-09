@@ -8,7 +8,7 @@
 <table class="table">
     <tr>
         <th>Writer</th>
-        <th>Payment Profile</th>
+        <th class="d-none d-md-block">Payment Profile</th>
         <th>Articles (w/o Bonus)</th>
         <th>Articles (w/ Bonus)</th>
         <th>TotalPayment</th>
@@ -17,7 +17,7 @@
     {
         <tr>
             <td>@userPayment.ApplicationUser.FirstName  @userPayment.ApplicationUser.LastName</td>
-            <td>@userPayment.PaymentProfile.Name</td>
+            <td class="d-none d-md-block">@userPayment.PaymentProfile.Name</td>
             <td>@userPayment.NumArticlesWithoutBonus</td>
             <td>@userPayment.NumArticlesWithBonus</td>
             <td>@userPayment.TotalPayment</td>

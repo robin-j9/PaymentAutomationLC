@@ -5,11 +5,11 @@
 
 <h1>@Model.MonthYear  Articles</h1>
 <a asp-controller="Payment" asp-action="CalculatePayments"
-   asp-route-paymentId="@Model.Id">
+   asp-route-paymentId="@Model.Id" class="btn btn-primary">
     Calculate Payments
 </a>
 <a asp-controller="Payment" asp-action="Summary" 
-        asp-route-id="@Model.Id">
+        asp-route-id="@Model.Id" class="btn btn-primary">
     View Summary
 </a>
 
@@ -24,7 +24,7 @@
     {
         <tr>
             <td>@article.Writer</td>
-            <td>@article.DateWritten</td>
+            <td>@article.DateWritten.ToString("d")</td>
             <td>@article.ArticleTitle</td>
             <td>@article.PageViews</td>
         </tr>

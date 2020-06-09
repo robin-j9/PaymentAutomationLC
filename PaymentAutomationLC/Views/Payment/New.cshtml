@@ -3,18 +3,20 @@
     ViewData["Title"] = "New";
 }
 
-<h1>New Payment</h1>
+<h1 class="text-center">New Payment</h1>
 
-<form asp-controller="Payment" asp-action="New" method="post" enctype="multipart/form-data">
+<form asp-controller="Payment" asp-action="New" method="post" enctype="multipart/form-data" class="form-center">
     <div class="form-group">
         <label asp-for="MonthYear"></label>
-        <input asp-for="MonthYear" />
+        <input asp-for="MonthYear" class="form-control"/>
         <span asp-validation-for="MonthYear"></span>
     </div>
     <div class="form-group">
-        <label asp-for="File">Select .csv file to upload: </label>
-        <input asp-for="File"/>
-        <span asp-validation-for="File"></span>
+        <div class="custom-file">
+            <label asp-for="File" class="custom-file-label">Select .csv file to upload: </label>
+            <input asp-for="File" class="custom-file-input"/>
+            <span asp-validation-for="File"></span>
+        </div>
     </div>
-        <input type="submit" value="Upload"/>
+        <input type="submit" value="Upload" class="btn btn-primary btn-block"/>
 </form>
