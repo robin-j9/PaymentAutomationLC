@@ -3,26 +3,33 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome @Model.FirstName!</h1>
-        <div class="row justify-content-center">
-            <div class="card col-md-4 border-0">
-                <div class="card-body">
-                    <a class="btn card-title" asp-controller="Payment" asp-action="Index">
-                        <i class="far fa-folder fa-9x"></i>
-                        <h5>Payments</h5>
-                    </a>
-                </div>
-            </div>
-            <div class="card col-md-4 border-0">
-                <div class="card-body">
-                    <a class="btn card-title" asp-controller="User" asp-action="Index">
-                        <i class="far fa-folder fa-9x"></i>
-                        <h5>Users</h5>
-                    </a>
+<div class="text-center">
+    <h1 class="display-4">Welcome @Model.FirstName!</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="dropdown">
+                <a class="btn dropdown-toggle" asp-controller="Payment" asp-action="Index" role="button" id="paymentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="far fa-folder fa-9x"></i>
+                    <h5>Payments</h5>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="paymentDropdown">
+                    <a class="dropdown-item" asp-controller="Payment" asp-action="Index">View Payments</a>
+                    <a class="dropdown-item" asp-controller="Payment" asp-action="New">New Payment/File Upload</a>
+                    <a class="dropdown-item" asp-controller="PaymentProfile" asp-action="Index">Payment Profiles</a>
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary" asp-controller="Payment" asp-action="New">New Payment</a>
-        <a class="btn btn-primary" asp-controller="PaymentProfile" asp-action="Index">Payment Profiles</a>
+        <div class="col-md-4">
+            <div class="dropdown">
+                <a class="btn dropdown-toggle" asp-controller="User" asp-action="Index" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="far fa-folder fa-9x"></i>
+                    <h5>Users</h5>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" asp-controller="User" asp-action="Index">View Users</a>
+                    <a class="dropdown-item" asp-controller="User" asp-action="New">New User</a>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
