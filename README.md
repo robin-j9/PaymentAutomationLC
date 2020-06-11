@@ -12,7 +12,7 @@ The first iteration of this app assumes that the .csv files will be uploaded wit
 * C#
 * ASP.NET Core 3.1
 * ASP.NET Core Identity
-* Bootstrap
+* Bootstrap 4
 
 ## Features
 
