@@ -16,7 +16,7 @@ The first iteration of this app assumes that the .csv files will be uploaded wit
 
 ## Features
 
-* User registration with roles
+* User authentication with roles
 * .csv file uploading and parsing
 * Payment parameter customization and automatic payment calculation
 * Ability to review payment records
