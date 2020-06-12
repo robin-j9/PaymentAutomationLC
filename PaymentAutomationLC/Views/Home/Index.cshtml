@@ -3,33 +3,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <div class="row vh-100 justify-content-center align-content-center">
+<div class="container text-center">
+    <div class="row">
         <h1 class="display-4 col-12 pb-5">Welcome @Model.FirstName!</h1>
-        <div class="col-md-4">
-            <div class="dropdown">
-                <a class="btn dropdown-toggle" asp-controller="Payment" asp-action="Index" role="button" id="paymentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-folder fa-9x"></i>
-                    <h5>Payments</h5>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="paymentDropdown">
-                    <a class="dropdown-item" asp-controller="Payment" asp-action="Index">View Payments</a>
-                    <a class="dropdown-item" asp-controller="Payment" asp-action="New">New Payment/File Upload</a>
-                    <a class="dropdown-item" asp-controller="PaymentProfile" asp-action="Index">Payment Profiles</a>
-                </div>
-            </div>
+        <div class="col-md-4 offset-md-2">
+            <a class="btn" asp-controller="Payment" asp-action="Index">
+                <i class="fas fa-folder fa-9x"></i>
+                <h5>Payments</h5>
+            </a>
         </div>
         <div class="col-md-4">
-            <div class="dropdown">
-                <a class="btn dropdown-toggle" asp-controller="User" asp-action="Index" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-folder fa-9x"></i>
-                    <h5>Users</h5>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" asp-controller="User" asp-action="Index">View Users</a>
-                    <a class="dropdown-item" asp-controller="User" asp-action="New">New User</a>
-                </div>
-            </div>
+            <a class="btn" asp-controller="User" asp-action="Index">
+                <i class="fas fa-folder fa-9x"></i>
+                <h5>Users</h5>
+            </a>
+        </div>
+        <div class="col-md-4 offset-md-2">
+            <a class="btn" asp-controller="Payment" asp-action="New">
+                <i class="fas fa-folder-plus fa-9x"></i>
+                <h5>New Payment</h5>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn" asp-controller="User" asp-action="New">
+                <i class="fas fa-folder-plus fa-9x"></i>
+                <h5>New User</h5>
+            </a>
+        </div>
+        <div class="col-12">
+            <a class="btn" asp-controller="PaymentProfile" asp-action="Index">
+                <i class="fas fa-folder fa-9x"></i>
+                <h5>Payment Profiles</h5>
+            </a>
         </div>
     </div>
 </div>
