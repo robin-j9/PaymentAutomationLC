@@ -100,3 +100,11 @@ body {
     z-index: 1;
 }
 
+.folder:hover .fa-folder,
+.folder .fa-folder-open {
+    display: none;
+}
+
+.folder:hover .fa-folder-open {
+    display: inline;
+}
