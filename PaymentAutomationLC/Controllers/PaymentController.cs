@@ -66,14 +66,11 @@ namespace PaymentAutomationLC.Controllers
             Payment payment = Payment.GetById(paymentId, context);
             var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
 
-            IList<ApplicationUserPayment> userPayments = new List<ApplicationUserPayment>();
-
             foreach (var group in articlesByWriter)
             {
                 ApplicationUserPayment userPayment = new ApplicationUserPayment(context, group, payment);
                 ApplicationUserPayment.CalculateUserPayment(userPayment, group);
 
-                userPayments.Add(userPayment);
                 context.ApplicationUserPayments.Add(userPayment);
             }
             context.SaveChanges();
