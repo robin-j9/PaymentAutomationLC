@@ -97,5 +97,10 @@ namespace PaymentAutomationLC.Controllers
             UserHistoryViewModel userHistoryViewModel = new UserHistoryViewModel(id, context);   
             return View(userHistoryViewModel);
         }
+
+        public IActionResult Delete(int id)
+        {
+            return Redirect("/Payment");
+        }
     }
 }
