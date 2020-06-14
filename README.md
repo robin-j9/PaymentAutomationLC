@@ -20,6 +20,7 @@ The first iteration of this app assumes that the .csv files will be uploaded wit
 * .csv file uploading and parsing
 * Payment parameter customization and automatic payment calculation
 * Ability to review payment records
+* List search/sort/pagination
 
 ## License
 
