@@ -8,23 +8,27 @@
 @if(Model.UserPayments.Count() != 0)
 {
     <table class="table">
-        <tr>
-            <th>Payment Period</th>
-            <th>Payment Profile</th>
-            <th>Articles (w/o Bonus)</th>
-            <th>Articles (w/ Bonus)</th>
-            <th>TotalPayment</th>
-        </tr>
-        @foreach (var userPayment in Model.UserPayments)
-        {
+        <thead>
             <tr>
-                <td>@userPayment.Payment.MonthYear</td>
-                <td>@userPayment.PaymentProfile.Name</td>
-                <td>@userPayment.NumArticlesWithoutBonus</td>
-                <td>@userPayment.NumArticlesWithBonus</td>
-                <td>@userPayment.TotalPayment</td>
+                <th>Payment Period</th>
+                <th>Payment Profile</th>
+                <th>Articles (w/o Bonus)</th>
+                <th>Articles (w/ Bonus)</th>
+                <th>TotalPayment</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var userPayment in Model.UserPayments)
+            {
+                <tr>
+                    <td>@userPayment.Payment.MonthYear</td>
+                    <td>@userPayment.PaymentProfile.Name</td>
+                    <td>@userPayment.NumArticlesWithoutBonus</td>
+                    <td>@userPayment.NumArticlesWithBonus</td>
+                    <td>@userPayment.TotalPayment</td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 else

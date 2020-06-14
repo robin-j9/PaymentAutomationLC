@@ -14,19 +14,23 @@
 </a>
 
 <table class="table">
-    <tr>
-        <th>Writer</th>
-        <th>Date Written</th>
-        <th>Article Title</th>
-        <th>Page Views</th>
-    </tr>
-    @foreach(var article in Model.Articles)
-    {
+    <thead>
         <tr>
-            <td>@article.Writer</td>
-            <td>@article.DateWritten.ToString("d")</td>
-            <td>@article.ArticleTitle</td>
-            <td>@article.PageViews</td>
+            <th>Writer</th>
+            <th>Date Written</th>
+            <th>Article Title</th>
+            <th>Page Views</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach(var article in Model.Articles)
+        {
+            <tr>
+                <td>@article.Writer</td>
+                <td>@article.DateWritten.ToString("d")</td>
+                <td>@article.ArticleTitle</td>
+                <td>@article.PageViews</td>
+            </tr>
+        }
+    </tbody>
 </table>

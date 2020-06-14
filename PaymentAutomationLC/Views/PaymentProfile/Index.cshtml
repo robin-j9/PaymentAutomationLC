@@ -4,33 +4,37 @@
 }
 
 <h1>Payment Profiles</h1>
+<a class="btn btn-primary" asp-controller="PaymentProfile" asp-action="New">Add profile</a>
 
 @if (Model.Count != 0)
 {
     <table class="table">
-        <tr>
-            <th>Name</th>
-            <th>Pay/Article</th>
-            <th>Article Bonus</th>
-            <th>Minimum PV for Bonus</th>
-        </tr>
-
-        @foreach (var profile in Model)
-        {
+        <thead>
             <tr>
-                <td>@profile.Name</td>
-                <td>@profile.PayPerArticle</td>
-                <td>@profile.ArticleBonus</td>
-                <td>@profile.MinimumPVForBonus</td>
-                <td>
-                    <a asp-controller="PaymentProfile" asp-action="Edit" asp-route-id="@profile.Id">Edit</a>
-                </td>
+                <th>Name</th>
+                <th>Pay/Article</th>
+                <th>Article Bonus</th>
+                <th>Minimum PV for Bonus</th>
+                <th>Edit</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var profile in Model)
+            {
+                <tr>
+                    <td>@profile.Name</td>
+                    <td>@profile.PayPerArticle</td>
+                    <td>@profile.ArticleBonus</td>
+                    <td>@profile.MinimumPVForBonus</td>
+                    <td>
+                        <a asp-controller="PaymentProfile" asp-action="Edit" asp-route-id="@profile.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 else
 {
     <p>No payment profiles</p>
 }
-<a asp-controller="PaymentProfile" asp-action="New">Add profile</a>
