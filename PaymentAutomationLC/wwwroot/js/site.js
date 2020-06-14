@@ -3,5 +3,12 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $("table").DataTable();
+    if ($("table").hasClass("no-pagination")) {
+        $(".no-pagination").DataTable({
+            "paging": false
+        })
+    }
+    else {
+        $("table").DataTable();
+    }
 });
