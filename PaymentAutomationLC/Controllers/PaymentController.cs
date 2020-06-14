@@ -64,6 +64,7 @@ namespace PaymentAutomationLC.Controllers
         public IActionResult CalculatePayments(int paymentId)
         {
             Payment payment = Payment.GetById(paymentId, context);
+            payment.CalculationComplete = true;
             var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
 
             foreach (var group in articlesByWriter)
