@@ -11,4 +11,9 @@ $(document).ready(function () {
     else {
         $("table").DataTable();
     }
+
+    $('#new-file-upload').change((e) => {
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    })
 });
