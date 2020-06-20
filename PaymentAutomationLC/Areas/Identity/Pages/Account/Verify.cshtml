@@ -1,0 +1,19 @@
+﻿@page
+@model PaymentAutomationLC.Areas.Identity.Pages.Account.VerifyModel
+@{
+}
+<h1 class="text-center">Verify User</h1>
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-center">
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+</form>

@@ -36,6 +36,9 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
+        // linked to Verify page
+        [BindProperty]
+        public string Id { get; set; }
 
         [BindProperty]
         public InputModel Input { get; set; }
