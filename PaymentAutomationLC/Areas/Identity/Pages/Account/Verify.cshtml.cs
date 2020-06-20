@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PaymentAutomationLC.Data;
 using PaymentAutomationLC.Models;
 
 namespace PaymentAutomationLC.Areas.Identity.Pages.Account
@@ -37,8 +38,11 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
         {
             if(ModelState.IsValid)
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(Email);
-                return RedirectToPage("/Account/Register", new { user.Id });
+                ApplicationUser user = _userManager.Users.Single(u => u.Email.Equals(Email));
+                if (user != null)
+                {
+                    return RedirectToPage("/Account/Register", new { user.Id });
+                }
             }
             return Page();
         }
