@@ -67,6 +67,9 @@ namespace PaymentAutomationLC.Controllers
                 IdentityRole roleToAdd = await roleManager.FindByIdAsync(newUserViewModel.IdentityRoleId);
                 await userManager.AddToRoleAsync(newUser, roleToAdd.Name);
 
+                // TODO: Change so initial PW is not hard-coded
+                await userManager.AddPasswordAsync(newUser, "Password0!");
+
                 context.Users.Add(newUser);
                 context.SaveChanges();
                 return Redirect("/User/Index");

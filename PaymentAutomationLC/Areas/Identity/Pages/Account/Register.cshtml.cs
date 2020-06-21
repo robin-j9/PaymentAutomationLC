@@ -36,6 +36,11 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
+        // linked to Verify page
+        [BindProperty(SupportsGet = true)]
+        public string Id { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -75,6 +80,8 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            ApplicationUser user = _userManager.Users.FirstOrDefault(u => u.Id.Equals(Id));
+            if (user != null) Email = user.Email;
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
