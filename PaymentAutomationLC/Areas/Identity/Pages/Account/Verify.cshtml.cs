@@ -38,17 +38,25 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = _userManager.Users.Single(u => u.Email.Equals(Email));
-                if (user != null)
+                if (_userManager.Users.FirstOrDefault(u => u.Email.Equals(Email)) != null)
                 {
-                    PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
-                    if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, Password)
-                        == PasswordVerificationResult.Success)
+                    ApplicationUser user = _userManager.Users.Single(u => u.Email.Equals(Email));
+                    if (user.UserName == null)
                     {
-                        return RedirectToPage("/Account/Register", new { user.Id });
+                        PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+                        if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, Password)
+                            == PasswordVerificationResult.Success)
+                        {
+                            return RedirectToPage("/Account/Register", new { user.Id });
+                        }
                     }
+                    ModelState.AddModelError("UserAlreadyRegistered", "This email is already registered. Please log in.");
+                    return Page();
                 }
+                ModelState.AddModelError("UserDoesNotExist", "There is no user with this email address.");
+                return Page();
             }
+            
             return Page();
         }
     }
