@@ -49,6 +49,8 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
                         {
                             return RedirectToPage("/Account/Register", new { user.Id });
                         }
+                        ModelState.AddModelError("Invalid Password", "Invalid username or password.");
+                        return Page();
                     }
                     ModelState.AddModelError("UserAlreadyRegistered", "This email is already registered. Please log in.");
                     return Page();

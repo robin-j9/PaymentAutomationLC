@@ -6,6 +6,8 @@
 
 <h1>@ViewData["Title"]</h1>
 
+@if (Model.Id != null)
+{
 <div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -71,6 +73,11 @@
         </section>
     </div>
 </div>
+}
+else
+{
+    <p>You do not have access to this page.</p>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

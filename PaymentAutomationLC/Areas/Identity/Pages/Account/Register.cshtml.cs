@@ -80,8 +80,8 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            ApplicationUser user = _userManager.Users.Single(u => u.Id.Equals(Id));
-            Email = user.Email;
+            ApplicationUser user = _userManager.Users.FirstOrDefault(u => u.Id.Equals(Id));
+            if (user != null) Email = user.Email;
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
