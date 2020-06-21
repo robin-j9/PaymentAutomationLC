@@ -34,14 +34,19 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
         {
         }
 
-        public async Task<IActionResult> OnPost()
+        public IActionResult OnPost()
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 ApplicationUser user = _userManager.Users.Single(u => u.Email.Equals(Email));
                 if (user != null)
                 {
-                    return RedirectToPage("/Account/Register", new { user.Id });
+                    PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+                    if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, Password)
+                        == PasswordVerificationResult.Success)
+                    {
+                        return RedirectToPage("/Account/Register", new { user.Id });
+                    }
                 }
             }
             return Page();
