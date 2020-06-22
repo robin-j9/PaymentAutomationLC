@@ -79,6 +79,16 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             public DateTime DateAdded { get; set; }
         }
 
+        private void UpdateUserInfo(ApplicationUser user, InputModel input)
+        {
+            user.UserName = input.Email;
+            user.NormalizedUserName = input.Email.ToUpper();
+            user.NormalizedEmail = input.Email.ToUpper();
+            user.FirstName = input.FirstName;
+            user.LastName = input.LastName;            
+            user.LockoutEnabled = true;
+        }
+
         public async Task OnGetAsync(string returnUrl = null)
         {
             ApplicationUser user = _userManager.Users.FirstOrDefault(u => u.Id.Equals(Id));
@@ -98,8 +108,9 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, DateAdded = DateTime.Now, PaymentProfileId = 1 };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                ApplicationUser user = _userManager.Users.Single(u => u.Email.Equals(Input.Email));
+                UpdateUserInfo(user, Input);
+                var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
