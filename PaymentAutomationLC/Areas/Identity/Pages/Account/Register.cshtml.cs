@@ -36,11 +36,12 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
-        // linked to Verify page
+
         [BindProperty(SupportsGet = true)]
         public string Id { get; set; }
-        [BindProperty]
         public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -67,7 +68,7 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "New password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
@@ -78,10 +79,25 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             public DateTime DateAdded { get; set; }
         }
 
+        private void UpdateUserInfo(ApplicationUser user, InputModel input)
+        {
+            user.UserName = input.Email;
+            user.NormalizedUserName = input.Email.ToUpper();
+            user.NormalizedEmail = input.Email.ToUpper();
+            user.FirstName = input.FirstName;
+            user.LastName = input.LastName;            
+            user.LockoutEnabled = true;
+        }
+
         public async Task OnGetAsync(string returnUrl = null)
         {
             ApplicationUser user = _userManager.Users.FirstOrDefault(u => u.Id.Equals(Id));
-            if (user != null) Email = user.Email;
+            if (user != null)
+            {
+                Email = user.Email;
+                FirstName = user.FirstName;
+                LastName = user.LastName;
+            }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -92,11 +108,15 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, DateAdded = DateTime.Now, PaymentProfileId = 1 };
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                ApplicationUser user = _userManager.Users.Single(u => u.Email.Equals(Input.Email));
+                UpdateUserInfo(user, Input);
+                var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var passwordResult = await _userManager.ResetPasswordAsync(user, passwordResetToken, Input.Password);
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded && passwordResult.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("User has registered and set new password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
