@@ -68,7 +68,7 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "New password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
@@ -110,10 +110,13 @@ namespace PaymentAutomationLC.Areas.Identity.Pages.Account
             {
                 ApplicationUser user = _userManager.Users.Single(u => u.Email.Equals(Input.Email));
                 UpdateUserInfo(user, Input);
+                var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var passwordResult = await _userManager.ResetPasswordAsync(user, passwordResetToken, Input.Password);
                 var result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
+
+                if (result.Succeeded && passwordResult.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("User has registered and set new password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
