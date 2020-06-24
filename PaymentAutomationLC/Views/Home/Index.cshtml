@@ -1,43 +1,61 @@
-﻿@model ApplicationUser
+﻿@model PaymentAutomationLC.ViewModels.HomeIndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container text-center">
-    <div class="row">
-        <h1 class="display-4 col-12 pb-5">Welcome @Model.FirstName!</h1>
-        <div class="col-md-4 offset-md-2">
-            <a class="btn folder" asp-controller="Payment" asp-action="Index">
-                <i class="fas fa-folder fa-9x"></i>
-                <i class="fas fa-folder-open fa-9x"></i>
-                <h5>Payments</h5>
-            </a>
-        </div>
-        <div class="col-md-4">
-            <a class="btn folder" asp-controller="User" asp-action="Index">
-                <i class="fas fa-folder fa-9x"></i>
-                <i class="fas fa-folder-open fa-9x"></i>
-                <h5>Users</h5>
-            </a>
-        </div>
-        <div class="col-md-4 offset-md-2">
-            <a class="btn" asp-controller="Payment" asp-action="New">
-                <i class="fas fa-folder-plus fa-9x"></i>
-                <h5>New Payment</h5>
-            </a>
-        </div>
-        <div class="col-md-4">
-            <a class="btn" asp-controller="User" asp-action="New">
-                <i class="fas fa-folder-plus fa-9x"></i>
-                <h5>New User</h5>
-            </a>
-        </div>
-        <div class="col-12">
-            <a class="btn folder" asp-controller="PaymentProfile" asp-action="Index">
-                <i class="fas fa-folder fa-9x"></i>
-                <i class="fas fa-folder-open fa-9x"></i>
-                <h5>Payment Profiles</h5>
-            </a>
+@if (Model.Role == "Admin")
+{
+    <div class="container text-center">
+        <div class="row">
+            <h1 class="display-4 col-12 pb-5">Welcome @Model.User.FirstName!</h1>
+            <div class="col-md-4 offset-md-2">
+                <a class="btn folder" asp-controller="Payment" asp-action="Index">
+                    <i class="fas fa-folder fa-9x"></i>
+                    <i class="fas fa-folder-open fa-9x"></i>
+                    <h5>Payments</h5>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="btn folder" asp-controller="User" asp-action="Index">
+                    <i class="fas fa-folder fa-9x"></i>
+                    <i class="fas fa-folder-open fa-9x"></i>
+                    <h5>Users</h5>
+                </a>
+            </div>
+            <div class="col-md-4 offset-md-2">
+                <a class="btn" asp-controller="Payment" asp-action="New">
+                    <i class="fas fa-folder-plus fa-9x"></i>
+                    <h5>New Payment</h5>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="btn" asp-controller="User" asp-action="New">
+                    <i class="fas fa-folder-plus fa-9x"></i>
+                    <h5>New User</h5>
+                </a>
+            </div>
+            <div class="col-12">
+                <a class="btn folder" asp-controller="PaymentProfile" asp-action="Index">
+                    <i class="fas fa-folder fa-9x"></i>
+                    <i class="fas fa-folder-open fa-9x"></i>
+                    <h5>Payment Profiles</h5>
+                </a>
+            </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="container text-center">
+        <div class="row">
+            <h1 class="display-4 col-12 pb-5">Welcome @Model.User.FirstName!</h1>
+            <div class="col-12">
+                <a class="btn folder" asp-controller="Payment" asp-action="UserHistory" asp-route-id="@Model.User.Id">
+                    <i class="fas fa-folder fa-9x"></i>
+                    <i class="fas fa-folder-open fa-9x"></i>
+                    <h5>Payments</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+}

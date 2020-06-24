@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PaymentAutomationLC.Data;
 using PaymentAutomationLC.Models;
+using PaymentAutomationLC.ViewModels;
 
 namespace PaymentAutomationLC.Controllers
 {
@@ -15,18 +17,22 @@ namespace PaymentAutomationLC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             context = dbContext;
+            _userManager = userManager;
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ApplicationUser user = context.Users.Single(u => User.Identity.Name.Equals(u.UserName));
-            return View(user);
+            IList<string> userRoles = await _userManager.GetRolesAsync(user);
+            HomeIndexViewModel homeIndexViewModel = new HomeIndexViewModel(user, userRoles);
+            return View(homeIndexViewModel);
         }
 
         [Authorize]
