@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using PaymentAutomationLC.ViewModels;
 
 namespace PaymentAutomationLC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -25,6 +27,7 @@ namespace PaymentAutomationLC.Controllers
             this.roleManager = roleManager;
             context = dbContext;
         }
+
         public async Task<IActionResult> IndexAsync()
         {
             IList<string> roles;

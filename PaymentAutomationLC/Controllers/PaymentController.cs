@@ -25,18 +25,21 @@ namespace PaymentAutomationLC.Controllers
         }
 
         // GET: /<controller>/
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             IList<Payment> payments = context.Payments.ToList();
             return View(payments);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult New()
         {
             NewPaymentViewModel newPaymentViewModel = new NewPaymentViewModel();
             return View(newPaymentViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult New(NewPaymentViewModel newPaymentViewModel)
         {
@@ -53,6 +56,7 @@ namespace PaymentAutomationLC.Controllers
             return View(newPaymentViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("/Payment/{paymentMonthYear}/Articles")]
         public IActionResult Articles(string paymentMonthYear)
         {
@@ -61,6 +65,7 @@ namespace PaymentAutomationLC.Controllers
             return View(payment);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CalculatePayments(int paymentId)
         {
             Payment payment = Payment.GetById(paymentId, context);
@@ -79,6 +84,7 @@ namespace PaymentAutomationLC.Controllers
             return Redirect("/Payment/Summary/" + paymentId);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Summary(int id)
         {
             IList<ApplicationUserPayment> userPayments = context.ApplicationUserPayments
@@ -90,12 +96,14 @@ namespace PaymentAutomationLC.Controllers
             return View(userPayments);
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         public IActionResult UserHistory(string id)
         {
             UserHistoryViewModel userHistoryViewModel = new UserHistoryViewModel(id, context);   
             return View(userHistoryViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             Payment paymentToDelete = new Payment { Id = id };
