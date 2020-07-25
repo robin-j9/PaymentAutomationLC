@@ -46,6 +46,7 @@ namespace PaymentAutomationLC.Controllers
             if (ModelState.IsValid)
             {
                 Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);
+                //TODO: DEAD CODE?
                 context.SaveChanges();
                 
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);

@@ -110,10 +110,11 @@ namespace PaymentAutomationLC.Controllers
                 ApplicationUser userToEdit = await userManager.FindByIdAsync(editUserViewModel.UserId);
                 IdentityRole newRole = await roleManager.FindByIdAsync(editUserViewModel.IdentityRoleId);
 
-                if (editUserViewModel.OldRoleName == "N/A")
+                //TODO: FIX - sets role to "n/a" no matter what on first edit
+                if (newRole.Name != editUserViewModel.OldRoleName)
                     await userManager.AddToRoleAsync(userToEdit, newRole.Name);
-                if (newRole.Name != editUserViewModel.OldRoleName 
-                    && editUserViewModel.OldRoleName != "N/A")
+
+                if (editUserViewModel.OldRoleName != "N/A")
                     await userManager.RemoveFromRoleAsync(userToEdit, editUserViewModel.OldRoleName);
 
                 ApplicationUser.EditUser(userToEdit, editUserViewModel);
