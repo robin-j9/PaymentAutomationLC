@@ -34,6 +34,10 @@ namespace PaymentAutomationLC.Models
             userToEdit.LastName = editUserViewModel.LastName;
             userToEdit.Email = editUserViewModel.Email;
             userToEdit.PaymentProfileId = editUserViewModel.PaymentProfileId;
+
+            userToEdit.UserName = editUserViewModel.Email.ToLower();
+            userToEdit.NormalizedUserName = editUserViewModel.Email.ToUpper();
+            userToEdit.NormalizedEmail = editUserViewModel.Email.ToUpper();
         }
     }
 }
