@@ -4,6 +4,7 @@ using PaymentAutomationLC.Data;
 using PaymentAutomationLC.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -44,17 +45,21 @@ namespace PaymentAutomationLC.Models
 
         public static Payment RetrieveExistingPaymentOrReturnNew(ApplicationDbContext context, NewPaymentViewModel newPaymentViewModel)
         {
-            bool exists = context.Payments.Any(p => p.MonthYear == newPaymentViewModel.MonthYear);
+            DateTimeFormatInfo mfi = new DateTimeFormatInfo();
+            string month = mfi.GetMonthName(Int32.Parse(newPaymentViewModel.Month)).ToString();
+            string monthYear = month + " " + newPaymentViewModel.Year.ToString();
+
+            bool exists = context.Payments.Any(p => p.MonthYear == monthYear);
             Payment payment;
             if (exists)
             {
-                payment = context.Payments.Single(p => p.MonthYear == newPaymentViewModel.MonthYear);
+                payment = context.Payments.Single(p => p.MonthYear == monthYear);
             }
             else
             {
                 payment = new Payment()
                 {
-                    MonthYear = newPaymentViewModel.MonthYear
+                    MonthYear = monthYear
                 };
                 context.Payments.Add(payment);
             }

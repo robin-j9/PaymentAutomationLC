@@ -6,17 +6,26 @@
 <h1 class="text-center">New Payment</h1>
 
 <form asp-controller="Payment" asp-action="New" method="post" enctype="multipart/form-data" class="form-center">
-    <div class="form-group">
-        <label asp-for="MonthYear"></label>
-        <input asp-for="MonthYear" class="form-control"/>
-        <span asp-validation-for="MonthYear"></span>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Month"></label>
+                <select asp-for="Month" asp-items="Model.Months" class="form-control" value="@Model.Month"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Year"></label>
+                <select asp-for="Year" asp-items="Model.Years" class="form-control"></select>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <div class="custom-file">
             <label asp-for="File" class="custom-file-label">Select .csv file to upload: </label>
-            <input asp-for="File" class="custom-file-input" id="new-file-upload"/>
+            <input asp-for="File" class="custom-file-input" id="new-file-upload" />
             <span asp-validation-for="File"></span>
         </div>
     </div>
-        <input type="submit" value="Upload" class="btn btn-primary btn-block"/>
+    <input type="submit" value="Upload" class="btn btn-primary btn-block" />
 </form>
