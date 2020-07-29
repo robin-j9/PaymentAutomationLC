@@ -85,7 +85,7 @@ body {
     }
 }
 
-.btn:hover, .btn:focus {
+.fas:hover, .fas:focus {
     cursor: pointer;
     outline: none;
     box-shadow: none;
@@ -107,4 +107,8 @@ body {
 
 .folder:hover .fa-folder-open {
     display: inline;
+}
+
+.table td {
+    vertical-align: middle !important;
 }
