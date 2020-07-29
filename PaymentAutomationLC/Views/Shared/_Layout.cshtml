@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PaymentAutomationLC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootswatch/dist/sandstone/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/datatables/datatables.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">PaymentAutomationLC</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,14 +21,14 @@
                 <div class="navbar-collapse collapse d-md-inline-flex flex-md-row">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" id="navbarUserDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                            <a class="nav-link dropdown-toggle text-light" id="navbarUserDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="User" asp-action="Index">Users</a>
                             <div class="dropdown-menu" aria-labelledby="navbarUserDropdown">
                                 <a class="dropdown-item" asp-controller="User" asp-action="Index">View Users</a>
                                 <a class="dropdown-item" asp-controller="User" asp-action="New">New User</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" id="navbarPaymentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="Payment" asp-action="Index">Payments</a>
+                            <a class="nav-link dropdown-toggle text-light" id="navbarPaymentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="Payment" asp-action="Index">Payments</a>
                             <div class="dropdown-menu" aria-labelledby="navbarPaymentDropdown">
                                 <a class="dropdown-item" asp-controller="Payment" asp-action="Index">View Payments</a>
                                 <a class="dropdown-item" asp-controller="Payment" asp-action="New">New Payment/File Upload</a>
