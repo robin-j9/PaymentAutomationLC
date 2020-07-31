@@ -9,11 +9,11 @@ namespace PaymentAutomationLC.Models
 {
     public class PaymentProfile
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public double PayPerArticle { get; set; }
-        public double ArticleBonus { get; set; }
-        public int MinimumPVForBonus { get; set; }
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public double PayPerArticle { get; private set; }
+        public double ArticleBonus { get; private set; }
+        public int MinimumPVForBonus { get; private set; }
 
         public PaymentProfile() { }
 

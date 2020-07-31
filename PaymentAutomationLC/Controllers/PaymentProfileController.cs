@@ -13,16 +13,16 @@ namespace PaymentAutomationLC.Controllers
     [Authorize(Roles = "Admin")]
     public class PaymentProfileController : Controller
     {
-        private ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
 
         public PaymentProfileController(ApplicationDbContext dbContext)
         {
-            context = dbContext;
+            _context = dbContext;
         }
 
         public IActionResult Index()
         {
-            List<PaymentProfile> paymentProfiles = context.PaymentProfiles.ToList();
+            List<PaymentProfile> paymentProfiles = _context.PaymentProfiles.ToList();
             return View(paymentProfiles);
         }
 
@@ -38,8 +38,8 @@ namespace PaymentAutomationLC.Controllers
             if (ModelState.IsValid)
             {
                 PaymentProfile newPaymentProfile = new PaymentProfile(paymentProfileViewModel);
-                context.PaymentProfiles.Add(newPaymentProfile);
-                context.SaveChanges();
+                _context.PaymentProfiles.Add(newPaymentProfile);
+                _context.SaveChanges();
                 return Redirect("/PaymentProfile/Index");
             }
             else
@@ -50,7 +50,7 @@ namespace PaymentAutomationLC.Controllers
 
         public IActionResult Edit(int id)
         {
-            PaymentProfileViewModel paymentProfileViewModel = new PaymentProfileViewModel(id, context);
+            PaymentProfileViewModel paymentProfileViewModel = new PaymentProfileViewModel(id, _context);
             return View(paymentProfileViewModel);
         }
 
@@ -59,8 +59,8 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                PaymentProfile.RetrieveAndEditPaymentProfile(paymentProfileViewModel, context);
-                context.SaveChanges();
+                PaymentProfile.RetrieveAndEditPaymentProfile(paymentProfileViewModel, _context);
+                _context.SaveChanges();
                 return Redirect("/PaymentProfile/Index");
             }
             else
