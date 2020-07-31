@@ -15,7 +15,7 @@ namespace PaymentAutomationLC.Models
     public class Payment
     {
         public int Id { get; set; }
-        public string MonthYear { get; set; }
+        public string MonthYear { get; private set; }
         public bool CalculationComplete { get; set; }
         public IEnumerable<Article> Articles { get; set; }
         public IList<ApplicationUserPayment> ApplicationUserPayments { get; set; }

@@ -9,17 +9,17 @@ namespace PaymentAutomationLC.Models
 {
     public class ApplicationUserPayment
     {
-        public string ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserId { get; private set; }
+        public ApplicationUser ApplicationUser { get; private set; }
 
-        public int PaymentId { get; set; }
-        public Payment Payment { get; set; }
+        public int PaymentId { get; private set; }
+        public Payment Payment { get; private set; }
 
-        public PaymentProfile PaymentProfile { get; set; }
-        public int NumArticlesWithoutBonus { get; set; }
-        public int NumArticlesWithBonus { get; set; }
+        public PaymentProfile PaymentProfile { get; private set; }
+        public int NumArticlesWithoutBonus { get; private set; }
+        public int NumArticlesWithBonus { get; private set; }
 
-        public double TotalPayment { get; set; }
+        public double TotalPayment { get; private set; }
 
         public ApplicationUserPayment() { }
 
