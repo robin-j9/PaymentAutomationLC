@@ -15,17 +15,17 @@ namespace PaymentAutomationLC.Controllers
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly ApplicationDbContext context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _context;
 
         public UserController(UserManager<ApplicationUser> userManager, 
                               RoleManager<IdentityRole> roleManager, 
                               ApplicationDbContext dbContext)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-            context = dbContext;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _context = dbContext;
         }
 
         public async Task<IActionResult> IndexAsync()
@@ -34,9 +34,9 @@ namespace PaymentAutomationLC.Controllers
             List<IList<string>> userRoles = new List<IList<string>>();
 
             // Get list of roles for each user
-            foreach(var user in userManager.Users)
+            foreach(var user in _userManager.Users)
             {
-                roles = await userManager.GetRolesAsync(user);
+                roles = await _userManager.GetRolesAsync(user);
                 if(roles.Count == 0)
                 {
                     roles = new List<string>() { "N/A" }; 
@@ -46,7 +46,7 @@ namespace PaymentAutomationLC.Controllers
 
             ViewUsersViewModel viewUsersViewModel = new ViewUsersViewModel
             {
-                Users = context.Users.Include(u => u.PaymentProfile).ToList(),
+                Users = _context.Users.Include(u => u.PaymentProfile).ToList(),
                 Roles = userRoles
             };
 
@@ -55,8 +55,8 @@ namespace PaymentAutomationLC.Controllers
 
         public IActionResult New()
         {
-            NewUserViewModel newUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), 
-                                                                     context.Roles.ToList());
+            NewUserViewModel newUserViewModel = new NewUserViewModel(_context.PaymentProfiles.ToList(), 
+                                                                     _context.Roles.ToList());
             return View(newUserViewModel);
         }
 
@@ -65,20 +65,20 @@ namespace PaymentAutomationLC.Controllers
         {
             if(ModelState.IsValid)
             {
-                ApplicationUser newUser = new ApplicationUser(newUserViewModel, context);
+                ApplicationUser newUser = new ApplicationUser(newUserViewModel, _context);
 
-                IdentityRole roleToAdd = await roleManager.FindByIdAsync(newUserViewModel.IdentityRoleId);
-                await userManager.AddToRoleAsync(newUser, roleToAdd.Name);
+                IdentityRole roleToAdd = await _roleManager.FindByIdAsync(newUserViewModel.IdentityRoleId);
+                await _userManager.AddToRoleAsync(newUser, roleToAdd.Name);
 
                 // TODO: Change so initial PW is not hard-coded
-                await userManager.AddPasswordAsync(newUser, "Password0!");
+                await _userManager.AddPasswordAsync(newUser, "Password0!");
 
-                context.Users.Add(newUser);
-                context.SaveChanges();
+                _context.Users.Add(newUser);
+                _context.SaveChanges();
                 return Redirect("/User/Index");
             }
-            NewUserViewModel.PopulateDropdowns(context.PaymentProfiles.ToList(),
-                                               context.Roles.ToList(),
+            NewUserViewModel.PopulateDropdowns(_context.PaymentProfiles.ToList(),
+                                               _context.Roles.ToList(),
                                                newUserViewModel);
             return View(newUserViewModel);
         }
@@ -86,18 +86,18 @@ namespace PaymentAutomationLC.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             // TODO: CLEAN UP
-            ApplicationUser userToEdit = await userManager.FindByIdAsync(id);
-            IList<string> userToEditRoles = await userManager.GetRolesAsync(userToEdit);
+            ApplicationUser userToEdit = await _userManager.FindByIdAsync(id);
+            IList<string> userToEditRoles = await _userManager.GetRolesAsync(userToEdit);
             IdentityRole userToEditRole;
             bool noRole = userToEditRoles.Count == 0;
 
             if (noRole) 
-                userToEditRole = await roleManager.FindByNameAsync("Employee");
+                userToEditRole = await _roleManager.FindByNameAsync("Employee");
             else 
-                userToEditRole = await roleManager.FindByNameAsync(userToEditRoles[0]);
+                userToEditRole = await _roleManager.FindByNameAsync(userToEditRoles[0]);
 
-            NewUserViewModel editUserViewModel = new NewUserViewModel(context.PaymentProfiles.ToList(), 
-                context.Roles.ToList(), userToEdit, userToEditRole);
+            NewUserViewModel editUserViewModel = new NewUserViewModel(_context.PaymentProfiles.ToList(), 
+                _context.Roles.ToList(), userToEdit, userToEditRole);
             if (noRole) editUserViewModel.OldRoleName = "N/A";
             return View(editUserViewModel);
         }
@@ -107,17 +107,17 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser userToEdit = await userManager.FindByIdAsync(editUserViewModel.UserId);
-                IdentityRole newRole = await roleManager.FindByIdAsync(editUserViewModel.IdentityRoleId);
+                ApplicationUser userToEdit = await _userManager.FindByIdAsync(editUserViewModel.UserId);
+                IdentityRole newRole = await _roleManager.FindByIdAsync(editUserViewModel.IdentityRoleId);
 
                 if (newRole.Name != editUserViewModel.OldRoleName)
-                    await userManager.AddToRoleAsync(userToEdit, newRole.Name);
+                    await _userManager.AddToRoleAsync(userToEdit, newRole.Name);
 
                 if (editUserViewModel.OldRoleName != "N/A" && editUserViewModel.OldRoleName != newRole.Name)
-                    await userManager.RemoveFromRoleAsync(userToEdit, editUserViewModel.OldRoleName);
+                    await _userManager.RemoveFromRoleAsync(userToEdit, editUserViewModel.OldRoleName);
 
                 ApplicationUser.EditUser(userToEdit, editUserViewModel);
-                await userManager.UpdateAsync(userToEdit);
+                await _userManager.UpdateAsync(userToEdit);
                 return Redirect("/User/Index");
             }
             return View(editUserViewModel);
@@ -126,8 +126,8 @@ namespace PaymentAutomationLC.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            ApplicationUser userToDelete = await userManager.FindByIdAsync(id);
-            await userManager.DeleteAsync(userToDelete);
+            ApplicationUser userToDelete = await _userManager.FindByIdAsync(id);
+            await _userManager.DeleteAsync(userToDelete);
             return Redirect("/User/Index");
         }
     }

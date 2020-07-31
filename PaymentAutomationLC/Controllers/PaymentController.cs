@@ -17,18 +17,18 @@ namespace PaymentAutomationLC.Controllers
 {
     public class PaymentController : Controller
     {
-        private ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
 
         public PaymentController(ApplicationDbContext dbContext)
         {
-            context = dbContext;
+            _context = dbContext;
         }
 
         // GET: /<controller>/
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
-            IList<Payment> payments = context.Payments.ToList();
+            IList<Payment> payments = _context.Payments.ToList();
             return View(payments);
         }
 
@@ -45,10 +45,10 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(context, newPaymentViewModel);                
+                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(_context, newPaymentViewModel);                
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
-                Article.AddArticlesToDatabase(articles, payment, context);
-                context.SaveChanges();
+                Article.AddArticlesToDatabase(articles, payment, _context);
+                _context.SaveChanges();
                 return Redirect("/Payment/" + payment.MonthYear + "/Articles");
             }
             return View(newPaymentViewModel);
@@ -58,7 +58,7 @@ namespace PaymentAutomationLC.Controllers
         [Route("/Payment/{paymentMonthYear}/Articles")]
         public IActionResult Articles(string paymentMonthYear)
         {
-            Payment payment = context.Payments.Include(p => p.Articles)
+            Payment payment = _context.Payments.Include(p => p.Articles)
                                      .Single(p => p.MonthYear.Equals(paymentMonthYear));
             return View(payment);
         }
@@ -66,18 +66,18 @@ namespace PaymentAutomationLC.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult CalculatePayments(int paymentId)
         {
-            Payment payment = Payment.GetById(paymentId, context);
+            Payment payment = Payment.GetById(paymentId, _context);
             payment.CalculationComplete = true;
             var articlesByWriter = payment.Articles.GroupBy(a => a.Writer);
 
             foreach (var group in articlesByWriter)
             {
-                ApplicationUserPayment userPayment = new ApplicationUserPayment(context, group, payment);
+                ApplicationUserPayment userPayment = new ApplicationUserPayment(_context, group, payment);
                 ApplicationUserPayment.CalculateUserPayment(userPayment, group);
 
-                context.ApplicationUserPayments.Add(userPayment);
+                _context.ApplicationUserPayments.Add(userPayment);
             }
-            context.SaveChanges();
+            _context.SaveChanges();
 
             return Redirect("/Payment/Summary/" + paymentId);
         }
@@ -85,7 +85,7 @@ namespace PaymentAutomationLC.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Summary(int id)
         {
-            IList<ApplicationUserPayment> userPayments = context.ApplicationUserPayments
+            IList<ApplicationUserPayment> userPayments = _context.ApplicationUserPayments
                 .Include(p => p.Payment)
                 .Include(p => p.ApplicationUser)
                 .Include(p => p.PaymentProfile)
@@ -97,7 +97,7 @@ namespace PaymentAutomationLC.Controllers
         [Authorize(Roles = "Admin, Employee")]
         public IActionResult UserHistory(string id)
         {
-            UserHistoryViewModel userHistoryViewModel = new UserHistoryViewModel(id, context);   
+            UserHistoryViewModel userHistoryViewModel = new UserHistoryViewModel(id, _context);   
             return View(userHistoryViewModel);
         }
 
@@ -105,8 +105,8 @@ namespace PaymentAutomationLC.Controllers
         public IActionResult Delete(int id)
         {
             Payment paymentToDelete = new Payment { Id = id };
-            context.Payments.Remove(paymentToDelete);
-            context.SaveChanges();
+            _context.Payments.Remove(paymentToDelete);
+            _context.SaveChanges();
             return Redirect("/Payment");
         }
     }

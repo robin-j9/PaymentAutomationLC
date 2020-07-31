@@ -16,20 +16,20 @@ namespace PaymentAutomationLC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
-            context = dbContext;
+            _context = dbContext;
             _userManager = userManager;
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            ApplicationUser user = context.Users.Single(u => User.Identity.Name.Equals(u.UserName));
+            ApplicationUser user = _context.Users.Single(u => User.Identity.Name.Equals(u.UserName));
             IList<string> userRoles = await _userManager.GetRolesAsync(user);
             HomeIndexViewModel homeIndexViewModel = new HomeIndexViewModel(user, userRoles);
             return View(homeIndexViewModel);
