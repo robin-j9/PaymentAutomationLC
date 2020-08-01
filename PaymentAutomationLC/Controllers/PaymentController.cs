@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PaymentAutomationLC.Models;
 using PaymentAutomationLC.Data;
-using System.Diagnostics;
 using PaymentAutomationLC.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,8 +42,13 @@ namespace PaymentAutomationLC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(_context, newPaymentViewModel);                
+                Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(_context, newPaymentViewModel);
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
+                if (payment.CalculationComplete)
+                {
+                    newPaymentViewModel.Error = "Calculation has already been completed for this month.";
+                    return View(newPaymentViewModel);
+                }
                 payment.AddArticlesToDatabase(articles, _context);
                 _context.SaveChanges();
                 return Redirect("/Payment/" + payment.MonthYear + "/Articles");

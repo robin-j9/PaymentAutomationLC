@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PaymentAutomationLC.ViewModels
 {
@@ -16,7 +14,8 @@ namespace PaymentAutomationLC.ViewModels
         public string Year { get; set; }
         public List<SelectListItem> Months { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Years { get; set; } = new List<SelectListItem>();
-       
+        public string Error { get; set; }
+
         [Required]
         public IFormFile File { get; set; }
         

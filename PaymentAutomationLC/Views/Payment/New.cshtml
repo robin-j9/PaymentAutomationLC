@@ -5,8 +5,15 @@
 
 <h1 class="text-center">New Payment</h1>
 
+
 <form asp-controller="Payment" asp-action="New" method="post" enctype="multipart/form-data" class="form-center">
     <div class="row">
+        @if (Model.Error != "")
+        {
+            <div class="col-12">
+                <p>@Model.Error</p>
+            </div>
+        }
         <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Month"></label>
