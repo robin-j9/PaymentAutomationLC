@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PaymentAutomationLC.Data;
-using PaymentAutomationLC.ViewModels;
 
 namespace PaymentAutomationLC.Models
 {
@@ -18,14 +13,5 @@ namespace PaymentAutomationLC.Models
         public int PaymentId { get; set; }
         
         public Article() { }
-
-        public static void AddArticlesToDatabase(IList<Article> articles, Payment payment, ApplicationDbContext context)
-        {
-            foreach (Article article in articles)
-            {
-                article.Payment = payment;
-                context.Articles.Add(article);
-            }
-        }
     }
 }

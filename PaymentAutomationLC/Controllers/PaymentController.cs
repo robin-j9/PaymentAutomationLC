@@ -47,7 +47,7 @@ namespace PaymentAutomationLC.Controllers
             {
                 Payment payment = Payment.RetrieveExistingPaymentOrReturnNew(_context, newPaymentViewModel);                
                 IList<Article> articles = Payment.ReadFile(newPaymentViewModel.File);
-                Article.AddArticlesToDatabase(articles, payment, _context);
+                payment.AddArticlesToDatabase(articles, _context);
                 _context.SaveChanges();
                 return Redirect("/Payment/" + payment.MonthYear + "/Articles");
             }

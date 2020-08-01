@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaymentAutomationLC.Models
 {
@@ -17,7 +15,7 @@ namespace PaymentAutomationLC.Models
         public int Id { get; set; }
         public string MonthYear { get; private set; }
         public bool CalculationComplete { get; set; }
-        public IEnumerable<Article> Articles { get; set; }
+        public IList<Article> Articles { get; set; }
         public IList<ApplicationUserPayment> ApplicationUserPayments { get; set; }
 
         public static IList<Article> ReadFile(IFormFile file)
@@ -70,6 +68,15 @@ namespace PaymentAutomationLC.Models
         {
             return context.Payments.Include(p => p.Articles)
                                      .Single(p => p.Id.Equals(paymentId));
+        }
+
+        public void AddArticlesToDatabase(IList<Article> articles, ApplicationDbContext context)
+        {
+            foreach (Article article in articles)
+            {
+                article.Payment = this;
+                context.Articles.Add(article);
+            }
         }
 
     }
