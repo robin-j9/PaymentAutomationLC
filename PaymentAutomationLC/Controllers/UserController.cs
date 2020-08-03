@@ -83,7 +83,7 @@ namespace PaymentAutomationLC.Controllers
             return View(newUserViewModel);
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> EditAsync(string id)
         {
             // TODO: CLEAN UP
             ApplicationUser userToEdit = await _userManager.FindByIdAsync(id);
@@ -103,7 +103,7 @@ namespace PaymentAutomationLC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(NewUserViewModel editUserViewModel)
+        public async Task<IActionResult> EditAsync(NewUserViewModel editUserViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -124,7 +124,7 @@ namespace PaymentAutomationLC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
             ApplicationUser userToDelete = await _userManager.FindByIdAsync(id);
             await _userManager.DeleteAsync(userToDelete);

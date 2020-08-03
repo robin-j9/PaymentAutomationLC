@@ -27,7 +27,7 @@ namespace PaymentAutomationLC.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexAsync()
         {
             ApplicationUser user = _context.Users.Single(u => User.Identity.Name.Equals(u.UserName));
             IList<string> userRoles = await _userManager.GetRolesAsync(user);
